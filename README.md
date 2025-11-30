@@ -2,9 +2,9 @@
 
 **Healthcare AI Solutions Architect | Digital Health Expert | M.Sc. LMU Munich**
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-healthinfotech.github.io-blue?style=for-the-badge)](https://healthinfotech.github.io)
+[![Portfolio](https://img.shields.io/badge/Portfolio-healthinfotech.github.io-blue?style=for-the-badge)](https://aliattia02.github.io/Health-InfoTech/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/ali-attia)
-[![Email](https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail)](mailto:aliattia2@gmail.com)
+[![Email](https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail)](mailto:ali.attia@gmx.de)
 
 ---
 
@@ -126,7 +126,7 @@ Comprehensive language learning platform with integrated text-to-speech.
 
 ## 📫 Get In Touch
 
-🌐 **Portfolio:** [healthinfotech.github.io](https://healthinfotech.github.io)  
+🌐 **Portfolio:** [Healthinfotech](https://aliattia02.github.io/Health-InfoTech/)  
 📧 **Email:** aliattia2@gmail.com  
 💼 **LinkedIn:** [linkedin.com/in/ali-attia](https://linkedin.com/in/ali-attia)  
 🏢 **Company:** Health Info Tech
