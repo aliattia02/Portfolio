@@ -12,7 +12,7 @@
 
 Founder of **Health Info Tech** specializing in AI-driven clinical systems and healthcare data analytics. I combine 5+ years of clinical pharmacy and hospital operations experience with advanced software development to build intelligent healthcare solutions.
 
-🎓 **M.Sc. Digital Health** (LMU Munich, Grade 1.6) | 💊 **Licensed Pharmacist** (Germany) | 📍 **Munich, Bavaria**
+🎓 **M.Sc. Digital Health** (DIT Germany, Grade 1.6) | 💊 **Licensed Pharmacist** (Germany) | 📍 **Munich, Bavaria**
 
 ---
 
