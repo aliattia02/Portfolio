@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeutschMind — German Language Platform · Ali Attia</title>
+  <meta name="description" content="Zero-dependency German learning platform. 3,000+ vocabulary, 60+ grammar topics, CEFR A1–C2, FSP module for healthcare professionals. No npm, no bundlers." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .proj-hero { background: linear-gradient(160deg, var(--bg) 50%, #0a1505 100%); }
+
+    .gender-legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .gender-pill {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .4rem 1rem;
+      border-radius: 99px;
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .gender-pill.der { background: rgba(77,159,255,.15); border: 1px solid rgba(77,159,255,.3); color: var(--blue); }
+    .gender-pill.die { background: rgba(255,95,109,.15); border: 1px solid rgba(255,95,109,.3); color: var(--red); }
+    .gender-pill.das { background: rgba(0,212,170,.15); border: 1px solid rgba(0,212,170,.3); color: var(--teal); }
+
+    .cefr-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: .75rem;
+    }
+
+    .cefr-level {
+      text-align: center;
+      padding: 1rem .5rem;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all .25s;
+    }
+
+    .cefr-level:hover { border-color: var(--teal); }
+
+    .cefr-code {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--teal);
+      display: block;
+    }
+
+    .cefr-label {
+      font-family: var(--font-mono);
+      font-size: .62rem;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .zero-dep-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: rgba(245,166,35,.08);
+      border: 1px solid rgba(245,166,35,.25);
+      border-radius: 8px;
+      padding: .75rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--amber);
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .cefr-grid { grid-template-columns: repeat(3,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Ali<span>.</span>Attia</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="proj-hero">
+    <div class="container">
+      <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+      <div class="label" style="margin-bottom:1.25rem;">Open Source · Zero Dependencies · Web Platform</div>
+      <h1 class="fade-up">DeutschMind</h1>
+      <p class="lead fade-up-2">
+        A fully static, browser-native German language learning platform — no npm, no bundlers,
+        no CDN imports. 3,000+ vocabulary entries, 60+ grammar topics, and a specialised
+        Fachsprachenpüfung (FSP) module for healthcare professionals.
+      </p>
+
+      <div class="proj-links fade-up-3">
+        <a href="https://aliattia02.github.io/DeutschMind" target="_blank" rel="noopener" class="btn btn-primary">Live Platform ↗</a>
+        <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
+      </div>
+
+      <div class="chips fade-up-4">
+        <span class="tag">Zero Dependencies</span>
+        <span class="tag">CEFR A1 – C2</span>
+        <span class="tag amber">FSP Healthcare Module</span>
+        <span class="tag blue">Web Speech API</span>
+      </div>
+
+      <div class="zero-dep-badge fade-up-4">
+        ⚡ No npm · No bundlers · No CDN · Pure browser — runs anywhere, forever
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN SCREENSHOT -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="img-placeholder" style="aspect-ratio:16/7;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 3h20v14H2z"/><path d="M8 21h8M12 17v4"/>
+          <path d="M7 8h3M7 12h5"/>
+        </svg>
+        <p>[ DeutschMind · Main Vocabulary Interface ]</p>
+        <p style="font-size:.65rem; color:var(--text-3); margin-top:.25rem;">Replace with a screenshot from aliattia02.github.io/DeutschMind</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="stat-grid">
+        <div class="stat-block">
+          <span class="stat-num">3,000+</span>
+          <span class="stat-label">Vocabulary Entries</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">60+</span>
+          <span class="stat-label">Grammar Topics</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">200+</span>
+          <span class="stat-label">Interactive Exercises</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">10</span>
+          <span class="stat-label">FSP Legal &amp; Professional Topics</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- CEFR LEVELS -->
+  <section>
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Coverage</div>
+      <h2 style="font-size:2rem; margin-bottom:1rem;">Full CEFR Spectrum</h2>
+      <p style="color:var(--text-2); max-width:560px; margin-bottom:2rem;">
+        Content spans the complete European language framework — from absolute beginner A1
+        all the way to C2 mastery — all filterable in real-time without a page reload.
+      </p>
+
+      <div class="cefr-grid" style="margin-bottom:3rem;">
+        <div class="cefr-level">
+          <span class="cefr-code">A1</span>
+          <span class="cefr-label">Beginner</span>
+        </div>
+        <div class="cefr-level">
+          <span class="cefr-code">A2</span>
+          <span class="cefr-label">Elementary</span>
+        </div>
+        <div class="cefr-level">
+          <span class="cefr-code">B1</span>
+          <span class="cefr-label">Intermediate</span>
+        </div>
+        <div class="cefr-level">
+          <span class="cefr-code">B2</span>
+          <span class="cefr-label">Upper-Int.</span>
+        </div>
+        <div class="cefr-level">
+          <span class="cefr-code">C1</span>
+          <span class="cefr-label">Advanced</span>
+        </div>
+        <div class="cefr-level">
+          <span class="cefr-code">C2</span>
+          <span class="cefr-label">Mastery</span>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="feature-grid" style="margin-bottom:3rem;">
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h4>Gender Colour-Coding (DerDieDas)</h4>
+          <p>Every noun is displayed with its grammatical gender colour — blue for <em>der</em>, red for <em>die</em>, green for <em>das</em> — consistently applied across all 3,000+ entries to build intuitive gender recognition.</p>
+          <div class="gender-legend">
+            <span class="gender-pill der">der — Blue</span>
+            <span class="gender-pill die">die — Red</span>
+            <span class="gender-pill das">das — Green</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔊</div>
+          <h4>Native Voice Controls</h4>
+          <p>Text-to-speech via the Web Speech API with customisable speed, pitch, and voice selection. Zero server calls for privacy and speed. Sequential audio playback with keyboard shortcuts for hands-free study.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏥</div>
+          <h4>FSP Specialised Module</h4>
+          <p>Dedicated Fachsprachenpüfung preparation module covering 10 legal and professional topics for pharmacy and healthcare professionals seeking German language certification for medical licensing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⌨️</div>
+          <h4>Interactive JS Engines</h4>
+          <p>Modular JavaScript engines for vocabulary drilling and grammar exercises — all vanilla JS, no framework. Real-time CEFR filtering, thematic grouping, and progress tracking without a single npm package.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h4>Zero-Dependency Architecture</h4>
+          <p>No npm, no bundlers, no CDN imports. Pure HTML5, CSS3, and vanilla JavaScript. Loads instantly, works offline, forkable on any static host, and will keep running indefinitely without dependency rot.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <h4>25 Thematic Groups</h4>
+          <p>Vocabulary organised into 25 thematic categories — from everyday conversation to medical and legal terminology — all filterable in real-time for targeted study sessions.</p>
+        </div>
+      </div>
+
+      <!-- Screenshot: Grammar -->
+      <div class="two-col" style="gap:3rem; margin-bottom:4rem; align-items:center;">
+        <div>
+          <div class="label" style="margin-bottom:1rem;">Grammar Engine</div>
+          <h3 style="font-size:1.6rem; margin-bottom:1rem;">60+ topics, interactive exercises</h3>
+          <p style="color:var(--text-2); margin-bottom:1rem;">
+            Each grammar topic includes a structured explanation, worked examples, and
+            interactive exercises with immediate feedback. Covers Kasus, Verb conjugation,
+            Konjunktiv, Passiv, and all major German grammar structures up to C2.
+          </p>
+          <div class="chips">
+            <span class="chip">60+ grammar topics</span>
+            <span class="chip">200+ exercises</span>
+            <span class="chip">CEFR-filtered</span>
+          </div>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          <p>[ Grammar Lessons Interface ]</p>
+        </div>
+      </div>
+
+      <!-- Screenshot: FSP Module -->
+      <div class="two-col reverse" style="gap:3rem; align-items:center;">
+        <div>
+          <div class="label" style="margin-bottom:1rem;">FSP Module</div>
+          <h3 style="font-size:1.6rem; margin-bottom:1rem;">Fachsprachenpüfung for healthcare professionals</h3>
+          <p style="color:var(--text-2); margin-bottom:1rem;">
+            A specialised section covering the clinical language exam required for foreign-trained
+            pharmacists and doctors seeking Approbation in Germany. 10 legal and professional
+            topics with domain-specific vocabulary and scenario training.
+          </p>
+          <div class="chips">
+            <span class="chip">10 FSP topics</span>
+            <span class="chip">Medical German</span>
+            <span class="chip">Approbation prep</span>
+          </div>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <p>[ FSP Module — Healthcare Language Prep ]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH -->
+  <section style="background:var(--bg-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Technology</div>
+      <h2 style="font-size:2rem; margin-bottom:1rem;">Why Zero Dependencies?</h2>
+      <p style="color:var(--text-2); max-width:640px; margin-bottom:2rem;">
+        Framework-free development was a deliberate choice — not a limitation.
+        The result is a platform that runs anywhere, loads in milliseconds, and
+        will never break due to a deprecated library or an npm security vulnerability.
+      </p>
+      <div class="chips" style="gap:.6rem;">
+        <span class="chip">HTML5</span>
+        <span class="chip">CSS3</span>
+        <span class="chip">Vanilla JavaScript (ES2020+)</span>
+        <span class="chip">Web Speech API</span>
+        <span class="chip">GitHub Pages</span>
+        <span class="chip">No build step</span>
+        <span class="chip">Offline capable</span>
+        <span class="chip">0 npm dependencies</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Ali Attia · <a href="index.html">Portfolio</a> · <a href="mailto:aliattia2@gmail.com">Contact</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

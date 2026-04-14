@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ali Attia — Full-Stack AI & HealthTech Developer</title>
+  <meta name="description" content="Licensed pharmacist and M.Sc. Digital Health graduate specialising in AI-powered medical platforms, FHIR R4 interoperability, and full-stack development." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Hero ─────────────────────────────── */
+    .hero {
+      padding: 11rem 0 7rem;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: pulse 2.5s ease infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--text-2);
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Right-side floating card */
+    .hero-card {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 320px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+    }
+
+    .hero-card-title {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--text-3);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: .85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-stat-row:last-child { border-bottom: none; }
+
+    .hero-stat-key {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--text-3);
+    }
+
+    .hero-stat-val {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    /* ── About ────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-left h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-left p {
+      color: var(--text-2);
+      margin-bottom: 1rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: 1.5rem;
+    }
+
+    .about-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--teal);
+      margin-top: .5rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(0,212,170,.5);
+    }
+
+    .timeline-year {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--teal);
+      margin-bottom: .25rem;
+      font-weight: 700;
+    }
+
+    .timeline-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: .2rem;
+    }
+
+    .timeline-org {
+      font-size: .9rem;
+      color: var(--text-3);
+    }
+
+    /* ── Skills ───────────────────────────── */
+    .skills-section { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group h4 {
+      font-size: .8rem;
+      font-family: var(--font-mono);
+      color: var(--text-3);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .skill-group .chips { gap: .4rem; }
+
+    /* ── Projects ─────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+
+    .project-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all .35s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .project-card:hover {
+      border-color: var(--teal-dim);
+      transform: translateY(-6px);
+      box-shadow: var(--glow);
+    }
+
+    .project-card.featured {
+      grid-column: 1 / -1;
+    }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 16/7;
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-thumb-inner {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--text-3);
+      text-align: center;
+    }
+
+    .project-thumb-icon {
+      font-size: 2.5rem;
+      margin-bottom: .5rem;
+      display: block;
+    }
+
+    /* Gradient accents per project */
+    .project-card[data-color="teal"] .project-thumb {
+      background: linear-gradient(135deg, #050b18 0%, #0a2028 60%, #0d2f25 100%);
+    }
+    .project-card[data-color="blue"] .project-thumb {
+      background: linear-gradient(135deg, #050b18 0%, #0c1a2e 60%, #0d1f38 100%);
+    }
+    .project-card[data-color="amber"] .project-thumb {
+      background: linear-gradient(135deg, #050b18 0%, #1e1508 60%, #2a1f0d 100%);
+    }
+    .project-card[data-color="green"] .project-thumb {
+      background: linear-gradient(135deg, #050b18 0%, #0a1d12 60%, #0f2718 100%);
+    }
+
+    .project-body {
+      padding: 1.75rem;
+    }
+
+    .project-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .project-body h3 {
+      font-size: 1.4rem;
+      margin-bottom: .5rem;
+      color: var(--white);
+    }
+
+    .project-body p {
+      font-size: .98rem;
+      color: var(--text-2);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-arrow {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    /* ── Contact ──────────────────────────── */
+    .contact-section {
+      text-align: center;
+      padding: 6rem 0;
+    }
+
+    .contact-section h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .contact-section p {
+      color: var(--text-2);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      color: var(--text-2);
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .75rem 1.25rem;
+      transition: all .25s;
+    }
+
+    .contact-item:hover {
+      color: var(--teal);
+      border-color: var(--teal-dim);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: auto; }
+      .hero-card { display: none; }
+      .hero h1 { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">Ali<span>.</span>Attia</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container" style="position:relative;">
+      <div class="hero-eyebrow fade-up">
+        <div class="online-dot"></div>
+        <span class="label" style="margin:0; font-size:.7rem;">Available for Part-Time &amp; Consulting</span>
+      </div>
+
+      <h1 class="fade-up-2">
+        Full-Stack<br>
+        <em>AI &amp; Health</em><br>
+        Tech Dev.
+      </h1>
+
+      <p class="hero-sub fade-up-3">
+        Licensed Pharmacist · M.Sc. Digital Health · Clinical AI Developer.
+        Building production-grade medical platforms at the intersection of clinical
+        standards and modern engineering.
+      </p>
+
+      <div class="hero-cta fade-up-4">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="mailto:aliattia2@gmail.com" class="btn btn-outline">Get In Touch</a>
+        <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="btn btn-ghost">GitHub ↗</a>
+      </div>
+
+      <!-- Floating info card -->
+      <div class="hero-card fade-up-4">
+        <div class="hero-card-title">// Profile</div>
+        <div class="hero-stat-row">
+          <span class="hero-stat-key">Location</span>
+          <span class="hero-stat-val">Germany (CET)</span>
+        </div>
+        <div class="hero-stat-row">
+          <span class="hero-stat-key">Availability</span>
+          <span class="hero-stat-val">15–25 hrs/wk</span>
+        </div>
+        <div class="hero-stat-row">
+          <span class="hero-stat-key">FHIR / Clinical AI</span>
+          <span class="hero-stat-val">€40–60 /hr</span>
+        </div>
+        <div class="hero-stat-row">
+          <span class="hero-stat-key">M.Sc. Grade</span>
+          <span class="hero-stat-val">1.6 · Excellent</span>
+        </div>
+        <div class="hero-stat-row">
+          <span class="hero-stat-key">DiaTwin Validation</span>
+          <span class="hero-stat-val">8.7/10 · LMU Munich</span>
+        </div>
+        <div class="hero-stat-row">
+          <span class="hero-stat-key">Work Auth</span>
+          <span class="hero-stat-val">Germany · Remote/Hybrid</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-left">
+          <div class="label" style="margin-bottom:1.25rem;">About Me</div>
+          <h2>Clinician who codes,<br>Engineer who cares.</h2>
+          <p>
+            I'm a licensed pharmacist with an M.Sc. in Digital Health who runs national EHR
+            deployments, validates clinical datasets at scale, and builds clinically validated
+            AI — closing the gap between what clinicians need and what engineers can build.
+          </p>
+          <p>
+            My thesis project, DiaTwin, received a clinical validation score of
+            <strong style="color:var(--teal)">8.7/10</strong> from Prof. Dr. Klaus Parhofer at LMU Munich
+            and is on a CE Class IIa + DiGA Fast-Track pathway.
+          </p>
+          <div class="badge-row">
+            <span class="tag">🇩🇪 German B2+</span>
+            <span class="tag">🇬🇧 English C1</span>
+            <span class="tag">🇸🇦 Arabic Native</span>
+            <span class="tag amber">§11 BApO Pharmacist</span>
+          </div>
+        </div>
+
+        <div class="about-timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-year">2022 – 2025</div>
+              <div class="timeline-title">M.Sc. Digital Health · Grade 1.6</div>
+              <div class="timeline-org">Deggendorf Institute of Technology, Germany</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-year">2021 – 2023</div>
+              <div class="timeline-title">Digital Transformation Officer</div>
+              <div class="timeline-org">Egypt Healthcare Authority · National EHR Rollout</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-year">2019 – 2021</div>
+              <div class="timeline-title">Pharmaceutical Manager</div>
+              <div class="timeline-org">Egyptian Armed Forces · Supply Chain Analytics</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-year">2018 – 2021</div>
+              <div class="timeline-title">Clinical Pharmacist</div>
+              <div class="timeline-org">Zagazig Chest Hospital · Clinical Practice</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-year">2012 – 2018</div>
+              <div class="timeline-title">B.Sc. Pharmacy (6-year programme)</div>
+              <div class="timeline-org">Zagazig University, Egypt</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <div class="label" style="margin-bottom:2.5rem;">Technical Skills</div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4>Languages &amp; Frameworks</h4>
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Flask</span>
+            <span class="chip">React</span>
+            <span class="chip">React Native</span>
+            <span class="chip">Expo</span>
+            <span class="chip">Vanilla JS</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>AI &amp; Data</h4>
+          <div class="chips">
+            <span class="chip">TensorFlow</span>
+            <span class="chip">scikit-learn</span>
+            <span class="chip">Gemini 2.5 API</span>
+            <span class="chip">PK/PD Modelling</span>
+            <span class="chip">Pandas</span>
+            <span class="chip">Power BI</span>
+            <span class="chip">ETL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Clinical Standards</h4>
+          <div class="chips">
+            <span class="chip">HL7 FHIR R4</span>
+            <span class="chip">ICD-10-GM</span>
+            <span class="chip">SNOMED CT</span>
+            <span class="chip">LOINC</span>
+            <span class="chip">ATC · DRG · CPT</span>
+            <span class="chip">OMOP CDM</span>
+            <span class="chip">DiGA · CE IIa</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Infrastructure</h4>
+          <div class="chips">
+            <span class="chip">MongoDB Atlas</span>
+            <span class="chip">Firebase</span>
+            <span class="chip">Redis</span>
+            <span class="chip">Vercel</span>
+            <span class="chip">Render</span>
+            <span class="chip">Cloudinary</span>
+            <span class="chip">JWT · Fernet</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Portfolio</div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem); margin-bottom:3rem;">Key Projects</h2>
+
+      <div class="projects-grid">
+
+        <!-- DiaTwin — featured -->
+        <a href="diatwin.html" class="project-card featured" data-color="teal">
+          <div class="project-thumb">
+            <div class="project-thumb-inner">
+              <span class="project-thumb-icon">🩺</span>
+              <p>[ Screenshot · DiaTwin App ]</p>
+              <p style="font-size:.6rem; margin-top:.25rem; color:var(--text-3)">Add your own image here</p>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="tag">M.Sc. Thesis · Live Product</span>
+              <span class="tag amber">TRL 4–5 · CE IIa Pathway</span>
+            </div>
+            <h3>DiaTwin — Clinical AI Insulin Dosing</h3>
+            <p>
+              AI-powered T1D management platform with proprietary PK/PD engine, Gemini Vision
+              food-scanning, Abbott FreeStyle Libre CGM integration, and RL layer trained on
+              50,000+ real meal-outcome pairs. Clinically validated 8.7/10 by Prof. Dr. Parhofer, LMU Munich.
+            </p>
+            <div class="chips" style="margin-bottom:1.25rem;">
+              <span class="chip">Python</span><span class="chip">Flask</span><span class="chip">React</span>
+              <span class="chip">React Native</span><span class="chip">MongoDB</span>
+              <span class="chip">TensorFlow</span><span class="chip">Gemini API</span>
+            </div>
+            <div class="project-footer">
+              <div class="chips">
+                <span class="tag">dia-twin.vercel.app ↗</span>
+              </div>
+              <span class="project-arrow">View Case Study →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Morafek CareMate -->
+        <a href="morafek.html" class="project-card" data-color="blue">
+          <div class="project-thumb">
+            <div class="project-thumb-inner">
+              <span class="project-thumb-icon">🏥</span>
+              <p>[ Screenshot · CareMate Dashboard ]</p>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="tag blue">Full-Stack · Production</span>
+            </div>
+            <h3>Morafek CareMate</h3>
+            <p>
+              FHIR-native care coordination platform. 6 manually-implemented FHIR R4 resource types,
+              ISiK Stage 1 compliance, DSGVO-ready, and AI-assisted ICD-10-GM coding across 14,370 codes.
+            </p>
+            <div class="chips" style="margin-bottom:1.25rem;">
+              <span class="chip">FHIR R4</span><span class="chip">Flask</span>
+              <span class="chip">React Native</span><span class="chip">Gemini</span>
+            </div>
+            <div class="project-footer">
+              <span class="tag blue">morafek-care-mate.vercel.app ↗</span>
+              <span class="project-arrow">View Case Study →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- DailyDeals -->
+        <a href="dailydeals.html" class="project-card" data-color="amber">
+          <div class="project-thumb">
+            <div class="project-thumb-inner">
+              <span class="project-thumb-icon">🛒</span>
+              <p>[ Screenshot · DailyDeals App ]</p>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="tag amber">Live · Google Play Store</span>
+            </div>
+            <h3>DailyDeals</h3>
+            <p>
+              Bilingual Arabic/English shopping companion for Egypt. Three-tier caching,
+              RTL support, Leaflet branch maps, live on Google Play serving 5 governorates.
+            </p>
+            <div class="chips" style="margin-bottom:1.25rem;">
+              <span class="chip">React Native</span><span class="chip">Expo</span>
+              <span class="chip">Redux</span><span class="chip">Firebase</span>
+            </div>
+            <div class="project-footer">
+              <span class="tag amber">Google Play ↗</span>
+              <span class="project-arrow">View Case Study →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- DeutschMind -->
+        <a href="deutschmind.html" class="project-card" data-color="green">
+          <div class="project-thumb">
+            <div class="project-thumb-inner">
+              <span class="project-thumb-icon">🇩🇪</span>
+              <p>[ Screenshot · DeutschMind Platform ]</p>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="tag">Zero Dependencies · Open Source</span>
+            </div>
+            <h3>DeutschMind</h3>
+            <p>
+              Zero-dependency German learning platform. 3,000+ vocabulary entries, 60+ grammar topics,
+              CEFR A1–C2, FSP module for healthcare professionals. No npm, no bundlers — pure browser.
+            </p>
+            <div class="chips" style="margin-bottom:1.25rem;">
+              <span class="chip">Vanilla JS</span><span class="chip">HTML5</span>
+              <span class="chip">Web Speech API</span><span class="chip">CSS3</span>
+            </div>
+            <div class="project-footer">
+              <span class="tag">aliattia02.github.io ↗</span>
+              <span class="project-arrow">View Case Study →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="label" style="margin-bottom:1rem; justify-content:center;">Let's Build Together</div>
+      <h2>Available for innovative<br>projects in Medical AI</h2>
+      <p>
+        Open to consulting, part-time, and collaborative projects in FHIR interoperability,
+        clinical AI, and full-stack healthtech development.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:aliattia2@gmail.com" class="contact-item">
+          ✉ aliattia2@gmail.com
+        </a>
+        <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="contact-item">
+          ⌥ github.com/aliattia02
+        </a>
+        <a href="https://linkedin.com/in/ali-attia-74748bb4" target="_blank" rel="noopener" class="contact-item">
+          ⊞ linkedin.com/in/ali-attia
+        </a>
+        <a href="https://aliattia02.github.io" target="_blank" rel="noopener" class="contact-item">
+          ◈ aliattia02.github.io
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Ali Attia · Full-Stack AI &amp; HealthTech Developer · Germany</p>
+    </div>
+  </footer>
+
+</body>
+</html>
