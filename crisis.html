@@ -8,11 +8,18 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ── CrisisScope accent colour ── */
-    :root { --crisis: #e8622a; --crisis-dim: rgba(232,98,42,.12); --crisis-border: rgba(232,98,42,.28); }
+    :root {
+      --crisis:        #e8622a;
+      --crisis-dim:    rgba(232,98,42,.12);
+      --crisis-border: rgba(232,98,42,.28);
+    }
 
-    .proj-hero { background: linear-gradient(160deg, #0f1f2e 0%, #07090f 100%); }
+    /* Hero gradient — dark cinematic backdrop */
+    .proj-hero {
+      background: linear-gradient(160deg, var(--bg) 40%, #0f1a26 100%);
+    }
 
-    /* pipeline strip */
+    /* ── Pipeline strip ── */
     .pipeline-grid {
       display: flex;
       border: 1px solid var(--border);
@@ -24,23 +31,31 @@
       padding: 1.5rem 1.25rem;
       border-right: 1px solid var(--border);
       position: relative;
+      background: var(--bg-2);
+      transition: background .25s;
     }
+    .pipeline-step:hover { background: var(--bg-3); }
     .pipeline-step:last-child { border-right: none; }
     .pipeline-num {
       font-family: var(--font-mono);
       font-size: .65rem;
       color: var(--crisis);
+      font-weight: 700;
+      letter-spacing: .1em;
       margin-bottom: .5rem;
     }
     .pipeline-title {
+      font-family: var(--font-head);
       font-size: .95rem;
       font-weight: 700;
       margin: 0 0 .4rem;
+      color: var(--white);
     }
     .pipeline-sub {
-      font-size: .75rem;
+      font-size: .8rem;
       color: var(--text-2);
       line-height: 1.5;
+      font-family: var(--font-body);
     }
     .pipeline-arrow {
       position: absolute;
@@ -52,26 +67,24 @@
       z-index: 2;
     }
 
-    /* compliance rows */
+    /* ── Compliance rows ── */
     .compliance-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: .85rem 1.25rem;
-      background: var(--bg);
+      padding: .9rem 1.25rem;
+      background: var(--bg-2);
       border: 1px solid var(--border);
       border-radius: 8px;
       margin-bottom: .6rem;
-      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+      transition: border-color .2s;
     }
+    .compliance-row:hover { border-color: var(--border-2); }
     .compliance-label {
       font-family: var(--font-mono);
       font-size: .78rem;
       color: var(--text-2);
     }
-    .badge-green  { color:#059669; background:rgba(5,150,105,.08);  border:1px solid rgba(5,150,105,.2); }
-    .badge-blue   { color:#1a73e8; background:rgba(26,115,232,.08); border:1px solid rgba(26,115,232,.2); }
-    .badge-amber  { color:#b45309; background:rgba(180,83,9,.08);   border:1px solid rgba(180,83,9,.2);  }
     .compliance-badge {
       font-family: var(--font-mono);
       font-size: .7rem;
@@ -81,11 +94,14 @@
       margin-left: 1rem;
       flex-shrink: 0;
     }
+    .badge-green { color:#059669; background:rgba(5,150,105,.08);  border:1px solid rgba(5,150,105,.2); }
+    .badge-blue  { color:#1a73e8; background:rgba(26,115,232,.08); border:1px solid rgba(26,115,232,.2); }
+    .badge-amber { color:#b45309; background:rgba(180,83,9,.08);   border:1px solid rgba(180,83,9,.2);  }
 
-    /* tech highlight trio */
+    /* ── Tech trio ── */
     .tech-trio {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       margin-top: 2rem;
     }
@@ -94,14 +110,20 @@
       padding: 1.5rem 1rem;
     }
     .tech-trio-num {
+      font-family: var(--font-head);
       font-size: 2rem;
       font-weight: 800;
       line-height: 1;
       margin-bottom: .35rem;
+      color: var(--crisis);
     }
-    .tech-trio-label { font-size: .8rem; color: var(--text-2); }
+    .tech-trio-label {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--text-2);
+    }
 
-    /* domain tag pill */
+    /* ── Domain tag pill ── */
     .domain-tag {
       font-family: var(--font-mono);
       font-size: .72rem;
@@ -119,6 +141,14 @@
       flex-shrink: 0;
     }
 
+    /* ── Crisis tag variant ── */
+    .tag-crisis {
+      background: var(--crisis-dim);
+      color: var(--crisis);
+      border: 1px solid var(--crisis-border);
+    }
+
+    /* ── Responsive overrides ── */
     @media (max-width: 768px) {
       .pipeline-grid { flex-direction: column; }
       .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); }
@@ -150,29 +180,28 @@
       <div class="label" style="margin-bottom:1.25rem; color:var(--crisis);">
         Full-Stack · Production · 2025
       </div>
-      <h1 class="fade-up" style="color:#fff;">CrisisScope</h1>
-      <p class="lead fade-up-2" style="color:rgba(255,255,255,.8);">
-        Humanitarian Crisis Data Platform
-      </p>
-      <p class="fade-up-3" style="color:rgba(255,255,255,.65); max-width:680px; line-height:1.7; margin-bottom:2rem;">
+
+      <h1 class="fade-up">CrisisScope</h1>
+      <p class="lead fade-up-2">Humanitarian Crisis Data Platform</p>
+      <p class="fade-up-3" style="color:var(--text-2); max-width:680px; line-height:1.7; margin-bottom:2rem;">
         End-to-end humanitarian crisis data platform — NLP-powered incident extraction,
         multi-source data integration, interactive dual-timeline visualization, and structured
-        evidence archival across 6 data domains. No third-party data warehouse. Every pipeline
-        built from scratch.
+        evidence archival across 6 data domains. No third-party data warehouse.
+        Every pipeline built from scratch.
       </p>
 
       <div class="proj-links fade-up-4">
-        <a href="#" class="btn btn-primary">Live Demo ↗</a>
-        <a href="https://github.com/aliattia2" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
+        <a href="https://aliattia02.github.io/Portfolio/crisis" target="_blank" rel="noopener" class="btn btn-primary">Live Demo ↗</a>
+        <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
       </div>
 
       <div class="chips fade-up-4" style="margin-top:1.5rem;">
-        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">NLP Extraction</span>
-        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">Dual-Timeline Engine</span>
-        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">Multi-source Integration</span>
-        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">GDPR-Ready</span>
-        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">14,370+ Records</span>
-        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">Leaflet Maps</span>
+        <span class="tag tag-crisis">NLP Extraction</span>
+        <span class="tag tag-crisis">Dual-Timeline Engine</span>
+        <span class="tag tag-crisis">Multi-source Integration</span>
+        <span class="tag tag-crisis">GDPR-Ready</span>
+        <span class="tag tag-crisis">Leaflet Maps</span>
+        <span class="tag tag-crisis">195KB Custom JS</span>
       </div>
     </div>
   </section>
@@ -183,7 +212,7 @@
       <div class="stat-grid">
         <div class="stat-block">
           <span class="stat-num" style="color:var(--crisis);">6</span>
-          <span class="stat-label">Structured Data Domains Implemented</span>
+          <span class="stat-label">Structured Data Domains</span>
         </div>
         <div class="stat-block">
           <span class="stat-num" style="color:var(--crisis);">35+</span>
@@ -261,27 +290,27 @@
 
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="domain-tag"><div class="domain-dot"></div> IncidentRecord</div>
+          <div class="domain-tag"><div class="domain-dot"></div>IncidentRecord</div>
           <p>Timestamped crisis events with location, type classification, casualty figures, and source attribution.</p>
         </div>
         <div class="feature-card">
-          <div class="domain-tag"><div class="domain-dot"></div> CasualtyData</div>
+          <div class="domain-tag"><div class="domain-dot"></div>CasualtyData</div>
           <p>Structured casualty records with demographic breakdown, verification status, and family-level detail.</p>
         </div>
         <div class="feature-card">
-          <div class="domain-tag"><div class="domain-dot"></div> InfrastructureEvent</div>
+          <div class="domain-tag"><div class="domain-dot"></div>InfrastructureEvent</div>
           <p>Attacks on protected sites — medical, educational, religious, water, and food infrastructure.</p>
         </div>
         <div class="feature-card">
-          <div class="domain-tag"><div class="domain-dot"></div> HumanitarianIndicator</div>
+          <div class="domain-tag"><div class="domain-dot"></div>HumanitarianIndicator</div>
           <p>Nutrition, displacement, aid access, and economic indicators with trend analysis and threshold alerts.</p>
         </div>
         <div class="feature-card">
-          <div class="domain-tag"><div class="domain-dot"></div> HistoricalRecord</div>
+          <div class="domain-tag"><div class="domain-dot"></div>HistoricalRecord</div>
           <p>Longitudinal event records spanning decades — normalized schema for cross-era comparative analysis.</p>
         </div>
         <div class="feature-card">
-          <div class="domain-tag"><div class="domain-dot"></div> DocumentBundle</div>
+          <div class="domain-tag"><div class="domain-dot"></div>DocumentBundle</div>
           <p>Full evidence export per incident — structured JSON bundle with all linked records, sources, and metadata.</p>
         </div>
       </div>
@@ -296,22 +325,25 @@
       <div class="label" style="margin-bottom:.75rem;">Platform Capabilities</div>
       <h2 style="font-size:2rem; margin-bottom:2.5rem;">From NLP Extraction to Geographic Visualization</h2>
 
-      <!-- NLP + Timeline side-by-side -->
-      <div class="two-col" style="gap:3rem; margin-bottom:4rem; align-items:flex-start;">
-        <div class="feature-card" style="flex:1;">
-          <div class="feature-icon">🧠</div>
+      <!-- NLP + Timeline -->
+      <div class="two-col" style="gap:3rem; margin-bottom:3rem; align-items:flex-start;">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--crisis-dim); border-color:var(--crisis-border);">🧠</div>
           <h4>NLP Incident Extraction</h4>
-          <p>Analysts submit raw news article URLs; Flask parses content, runs spaCy NER entity recognition, and maps events to the incident taxonomy. Offline SQLite queue ensures zero data loss during connectivity gaps.</p>
+          <p>Analysts submit raw news article URLs; Flask parses content, runs spaCy NER entity recognition,
+          and maps events to the incident taxonomy. Offline SQLite queue ensures zero data loss during connectivity gaps.</p>
           <div class="chips" style="margin-top:1rem;">
             <span class="chip">Flask + Python</span>
             <span class="chip">spaCy NER</span>
             <span class="chip">SQLite offline queue</span>
           </div>
         </div>
-        <div class="feature-card" style="flex:1;">
-          <div class="feature-icon">📅</div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--crisis-dim); border-color:var(--crisis-border);">📅</div>
           <h4>Dual-Timeline Engine</h4>
-          <p>62 KB hand-built timeline manager renders historical records spanning decades and current incident streams simultaneously. Three view modes — Timeline, Map, and List — with CSV-powered data loading and advanced filtering.</p>
+          <p>62 KB hand-built timeline manager renders historical records spanning decades and current incident
+          streams simultaneously. Three view modes — Timeline, Map, and List — with CSV-powered data loading
+          and advanced filtering.</p>
           <div class="chips" style="margin-top:1rem;">
             <span class="chip">62KB custom JS</span>
             <span class="chip">CSV-powered</span>
@@ -320,22 +352,24 @@
         </div>
       </div>
 
-      <!-- Maps + i18n side-by-side -->
-      <div class="two-col reverse" style="gap:3rem; margin-bottom:4rem; align-items:flex-start;">
-        <div class="feature-card" style="flex:1;">
-          <div class="feature-icon">🗺️</div>
+      <!-- Maps + i18n -->
+      <div class="two-col reverse" style="gap:3rem; margin-bottom:3rem; align-items:flex-start;">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--crisis-dim); border-color:var(--crisis-border);">🗺️</div>
           <h4>Geographic Incident Mapping</h4>
-          <p>Incidents plotted on interactive Leaflet maps with type-coded markers, zoom-level filtering, and click-through modals showing full incident detail with source attribution.</p>
+          <p>Incidents plotted on interactive Leaflet maps with type-coded markers, zoom-level filtering,
+          and click-through modals showing full incident detail with source attribution.</p>
           <div class="chips" style="margin-top:1rem;">
             <span class="chip">Leaflet.js</span>
             <span class="chip">GeoJSON</span>
             <span class="chip">Cluster markers</span>
           </div>
         </div>
-        <div class="feature-card" style="flex:1;">
-          <div class="feature-icon">🌐</div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--crisis-dim); border-color:var(--crisis-border);">🌐</div>
           <h4>Multi-Language Support</h4>
-          <p>Dynamic JSON translation system with language detection and RTL-ready fallback. Supports 3+ locales for international humanitarian monitoring teams.</p>
+          <p>Dynamic JSON translation system with language detection and RTL-ready fallback.
+          Supports 3+ locales for international humanitarian monitoring teams.</p>
           <div class="chips" style="margin-top:1rem;">
             <span class="chip">Dynamic JSON i18n</span>
             <span class="chip">RTL fallback</span>
@@ -344,22 +378,24 @@
         </div>
       </div>
 
-      <!-- Export + GDPR side-by-side -->
+      <!-- Export + GDPR -->
       <div class="two-col" style="gap:3rem; align-items:flex-start;">
-        <div class="feature-card" style="flex:1;">
-          <div class="feature-icon">📦</div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--crisis-dim); border-color:var(--crisis-border);">📦</div>
           <h4>Evidence Bundle Export</h4>
-          <p>Full evidence export per incident — structured JSON bundle with all linked records, sources, and metadata. CSV export pipeline for all domains with one-click backup creation.</p>
+          <p>Full evidence export per incident — structured JSON bundle with all linked records, sources, and metadata.
+          CSV export pipeline for all domains with one-click backup creation.</p>
           <div class="chips" style="margin-top:1rem;">
             <span class="chip">JSON bundle</span>
             <span class="chip">CSV export</span>
             <span class="chip">One-click backup</span>
           </div>
         </div>
-        <div class="feature-card" style="flex:1;">
-          <div class="feature-icon">🔒</div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:var(--crisis-dim); border-color:var(--crisis-border);">🔒</div>
           <h4>GDPR-Compliant Archival</h4>
-          <p>No personally identifiable data stored without consent. Source verification and attribution tracking on every record. OMOP CDM-compatible schema for analytics-database integration.</p>
+          <p>No personally identifiable data stored without consent. Source verification and attribution
+          tracking on every record. OMOP CDM-compatible schema for analytics-database integration.</p>
           <div class="chips" style="margin-top:1rem;">
             <span class="chip">No PII without consent</span>
             <span class="chip">Source attribution</span>
@@ -464,18 +500,17 @@
         </div>
       </div>
 
-      <!-- trio highlights -->
       <div class="tech-trio">
         <div class="card tech-trio-card">
-          <div class="tech-trio-num" style="color:var(--crisis);">195KB</div>
+          <div class="tech-trio-num">195KB</div>
           <div class="tech-trio-label">of custom JS — no React, no framework</div>
         </div>
         <div class="card tech-trio-card">
-          <div class="tech-trio-num" style="color:var(--crisis);">6 Active</div>
+          <div class="tech-trio-num">6 Active</div>
           <div class="tech-trio-label">data domains — 23+ sub-pages in roadmap</div>
         </div>
         <div class="card tech-trio-card">
-          <div class="tech-trio-num" style="color:var(--crisis);">v1.3.0</div>
+          <div class="tech-trio-num">v1.3.0</div>
           <div class="tech-trio-label">Active · last push April 2026</div>
         </div>
       </div>
@@ -495,15 +530,15 @@
       <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; max-width:800px;">
         <div class="card" style="padding:1.25rem;">
           <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// Email</div>
-          <a href="mailto:aliattia2@gmail.com" style="font-size:.9rem;">aliattia2@gmail.com</a>
+          <a href="mailto:aliattia2@gmail.com" style="font-size:.9rem; color:var(--teal);">aliattia2@gmail.com</a>
         </div>
         <div class="card" style="padding:1.25rem;">
           <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// GitHub</div>
-          <a href="https://github.com/aliattia02" target="_blank" rel="noopener" style="font-size:.9rem;">github.com/aliattia02</a>
+          <a href="https://github.com/aliattia02" target="_blank" rel="noopener" style="font-size:.9rem; color:var(--teal);">github.com/aliattia02</a>
         </div>
         <div class="card" style="padding:1.25rem;">
           <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// LinkedIn</div>
-          <a href="https://www.linkedin.com/in/ali-attia-74748bb4/" target="_blank" rel="noopener" style="font-size:.9rem;">Connect with me</a>
+          <a href="https://www.linkedin.com/in/ali-attia-74748bb4/" target="_blank" rel="noopener" style="font-size:.9rem; color:var(--teal);">Connect with me</a>
         </div>
         <div class="card" style="padding:1.25rem;">
           <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// Location</div>
@@ -516,7 +551,7 @@
   <footer>
     <div class="container">
       <p>© 2025 Ali Attia · <a href="index.html">Portfolio</a> · <a href="mailto:aliattia2@gmail.com">Contact</a></p>
-      <p style="margin-top:.4rem; font-size:.82rem; opacity:.6;">CrisisScope · NLP-Powered · GDPR-Ready · v1.3.0 · Frankfurt / Munich, Germany</p>
+      <p style="margin-top:.4rem; font-size:.82rem; opacity:.6;">CrisisScope · NLP-Powered · GDPR-Ready · v1.3.0 · Frankfurt / Munich</p>
     </div>
   </footer>
 
