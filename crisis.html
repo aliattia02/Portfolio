@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrisisScope — Humanitarian Crisis Data Platform · Ali Attia</title>
+  <meta name="description" content="NLP-powered humanitarian crisis data platform. End-to-end incident extraction, dual-timeline visualization, Leaflet maps, and structured evidence archival across 6 data domains." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── CrisisScope accent colour ── */
+    :root { --crisis: #e8622a; --crisis-dim: rgba(232,98,42,.12); --crisis-border: rgba(232,98,42,.28); }
+
+    .proj-hero { background: linear-gradient(160deg, #0f1f2e 0%, #07090f 100%); }
+
+    /* pipeline strip */
+    .pipeline-grid {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .pipeline-step {
+      flex: 1;
+      padding: 1.5rem 1.25rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .pipeline-step:last-child { border-right: none; }
+    .pipeline-num {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      color: var(--crisis);
+      margin-bottom: .5rem;
+    }
+    .pipeline-title {
+      font-size: .95rem;
+      font-weight: 700;
+      margin: 0 0 .4rem;
+    }
+    .pipeline-sub {
+      font-size: .75rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .pipeline-arrow {
+      position: absolute;
+      right: -9px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--crisis);
+      font-size: .65rem;
+      z-index: 2;
+    }
+
+    /* compliance rows */
+    .compliance-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .85rem 1.25rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: .6rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .compliance-label {
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      color: var(--text-2);
+    }
+    .badge-green  { color:#059669; background:rgba(5,150,105,.08);  border:1px solid rgba(5,150,105,.2); }
+    .badge-blue   { color:#1a73e8; background:rgba(26,115,232,.08); border:1px solid rgba(26,115,232,.2); }
+    .badge-amber  { color:#b45309; background:rgba(180,83,9,.08);   border:1px solid rgba(180,83,9,.2);  }
+    .compliance-badge {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      padding: .2rem .75rem;
+      border-radius: 99px;
+      white-space: nowrap;
+      margin-left: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* tech highlight trio */
+    .tech-trio {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .tech-trio-card {
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+    .tech-trio-num {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: .35rem;
+    }
+    .tech-trio-label { font-size: .8rem; color: var(--text-2); }
+
+    /* domain tag pill */
+    .domain-tag {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--crisis);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: .5rem;
+    }
+    .domain-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--crisis);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .pipeline-grid { flex-direction: column; }
+      .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .pipeline-step:last-child { border-bottom: none; }
+      .pipeline-arrow { display: none; }
+      .tech-trio { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Ali<span>.</span>Attia</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="proj-hero">
+    <div class="container">
+      <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+      <div class="label" style="margin-bottom:1.25rem; color:var(--crisis);">
+        Full-Stack · Production · 2025
+      </div>
+      <h1 class="fade-up" style="color:#fff;">CrisisScope</h1>
+      <p class="lead fade-up-2" style="color:rgba(255,255,255,.8);">
+        Humanitarian Crisis Data Platform
+      </p>
+      <p class="fade-up-3" style="color:rgba(255,255,255,.65); max-width:680px; line-height:1.7; margin-bottom:2rem;">
+        End-to-end humanitarian crisis data platform — NLP-powered incident extraction,
+        multi-source data integration, interactive dual-timeline visualization, and structured
+        evidence archival across 6 data domains. No third-party data warehouse. Every pipeline
+        built from scratch.
+      </p>
+
+      <div class="proj-links fade-up-4">
+        <a href="#" class="btn btn-primary">Live Demo ↗</a>
+        <a href="https://github.com/aliattia2" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
+      </div>
+
+      <div class="chips fade-up-4" style="margin-top:1.5rem;">
+        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">NLP Extraction</span>
+        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">Dual-Timeline Engine</span>
+        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">Multi-source Integration</span>
+        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">GDPR-Ready</span>
+        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">14,370+ Records</span>
+        <span class="tag" style="background:var(--crisis-dim); color:var(--crisis); border:1px solid var(--crisis-border);">Leaflet Maps</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="stat-grid">
+        <div class="stat-block">
+          <span class="stat-num" style="color:var(--crisis);">6</span>
+          <span class="stat-label">Structured Data Domains Implemented</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num" style="color:var(--crisis);">35+</span>
+          <span class="stat-label">REST Endpoints Across 5 Modules</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num" style="color:var(--crisis);">14,370+</span>
+          <span class="stat-label">Incident Records — NLP-Coded &amp; Verified</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num" style="color:var(--crisis);">3+</span>
+          <span class="stat-label">Languages via Dynamic Translation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── DATA PIPELINE ── -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">End-to-End Pipeline</div>
+      <h2 style="font-size:2rem; margin-bottom:.75rem;">Built In-House, Every Stage</h2>
+      <p style="color:var(--text-2); margin-bottom:2rem; max-width:620px; line-height:1.6;">
+        From raw news ingestion to structured JSON storage to interactive visualization —
+        no third-party data warehouse or BI platform involved.
+      </p>
+
+      <div class="pipeline-grid">
+        <div class="pipeline-step">
+          <div class="pipeline-num">01</div>
+          <div class="pipeline-title">Collection</div>
+          <p class="pipeline-sub">Flask + BeautifulSoup · Batch URL processing · Multi-source feeds</p>
+          <div class="pipeline-arrow">&#9658;</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">02</div>
+          <div class="pipeline-title">Extraction</div>
+          <p class="pipeline-sub">NLP · spaCy NER · Offline SQLite queue · Zero data loss</p>
+          <div class="pipeline-arrow">&#9658;</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">03</div>
+          <div class="pipeline-title">Structuring</div>
+          <p class="pipeline-sub">JSON / CSV schemas · Classification taxonomy · Source verification</p>
+          <div class="pipeline-arrow">&#9658;</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">04</div>
+          <div class="pipeline-title">Analysis</div>
+          <p class="pipeline-sub">Statistical aggregation · Trend detection · Severity scoring</p>
+          <div class="pipeline-arrow">&#9658;</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-num">05</div>
+          <div class="pipeline-title">Visualization</div>
+          <p class="pipeline-sub">Dual-timeline · Leaflet maps · Interactive charts · CSV export</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── 6 DATA DOMAINS ── -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Data Architecture</div>
+      <h2 style="font-size:2rem; margin-bottom:.75rem;">6 Structured Data Domains</h2>
+      <p style="color:var(--text-2); margin-bottom:2.5rem; max-width:660px; line-height:1.6;">
+        Each domain features a custom schema supporting filtering, geographic mapping,
+        temporal indexing, and CSV export — no external database engine.
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="domain-tag"><div class="domain-dot"></div> IncidentRecord</div>
+          <p>Timestamped crisis events with location, type classification, casualty figures, and source attribution.</p>
+        </div>
+        <div class="feature-card">
+          <div class="domain-tag"><div class="domain-dot"></div> CasualtyData</div>
+          <p>Structured casualty records with demographic breakdown, verification status, and family-level detail.</p>
+        </div>
+        <div class="feature-card">
+          <div class="domain-tag"><div class="domain-dot"></div> InfrastructureEvent</div>
+          <p>Attacks on protected sites — medical, educational, religious, water, and food infrastructure.</p>
+        </div>
+        <div class="feature-card">
+          <div class="domain-tag"><div class="domain-dot"></div> HumanitarianIndicator</div>
+          <p>Nutrition, displacement, aid access, and economic indicators with trend analysis and threshold alerts.</p>
+        </div>
+        <div class="feature-card">
+          <div class="domain-tag"><div class="domain-dot"></div> HistoricalRecord</div>
+          <p>Longitudinal event records spanning decades — normalized schema for cross-era comparative analysis.</p>
+        </div>
+        <div class="feature-card">
+          <div class="domain-tag"><div class="domain-dot"></div> DocumentBundle</div>
+          <p>Full evidence export per incident — structured JSON bundle with all linked records, sources, and metadata.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── PLATFORM CAPABILITIES ── -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Platform Capabilities</div>
+      <h2 style="font-size:2rem; margin-bottom:2.5rem;">From NLP Extraction to Geographic Visualization</h2>
+
+      <!-- NLP + Timeline side-by-side -->
+      <div class="two-col" style="gap:3rem; margin-bottom:4rem; align-items:flex-start;">
+        <div class="feature-card" style="flex:1;">
+          <div class="feature-icon">🧠</div>
+          <h4>NLP Incident Extraction</h4>
+          <p>Analysts submit raw news article URLs; Flask parses content, runs spaCy NER entity recognition, and maps events to the incident taxonomy. Offline SQLite queue ensures zero data loss during connectivity gaps.</p>
+          <div class="chips" style="margin-top:1rem;">
+            <span class="chip">Flask + Python</span>
+            <span class="chip">spaCy NER</span>
+            <span class="chip">SQLite offline queue</span>
+          </div>
+        </div>
+        <div class="feature-card" style="flex:1;">
+          <div class="feature-icon">📅</div>
+          <h4>Dual-Timeline Engine</h4>
+          <p>62 KB hand-built timeline manager renders historical records spanning decades and current incident streams simultaneously. Three view modes — Timeline, Map, and List — with CSV-powered data loading and advanced filtering.</p>
+          <div class="chips" style="margin-top:1rem;">
+            <span class="chip">62KB custom JS</span>
+            <span class="chip">CSV-powered</span>
+            <span class="chip">3 view modes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maps + i18n side-by-side -->
+      <div class="two-col reverse" style="gap:3rem; margin-bottom:4rem; align-items:flex-start;">
+        <div class="feature-card" style="flex:1;">
+          <div class="feature-icon">🗺️</div>
+          <h4>Geographic Incident Mapping</h4>
+          <p>Incidents plotted on interactive Leaflet maps with type-coded markers, zoom-level filtering, and click-through modals showing full incident detail with source attribution.</p>
+          <div class="chips" style="margin-top:1rem;">
+            <span class="chip">Leaflet.js</span>
+            <span class="chip">GeoJSON</span>
+            <span class="chip">Cluster markers</span>
+          </div>
+        </div>
+        <div class="feature-card" style="flex:1;">
+          <div class="feature-icon">🌐</div>
+          <h4>Multi-Language Support</h4>
+          <p>Dynamic JSON translation system with language detection and RTL-ready fallback. Supports 3+ locales for international humanitarian monitoring teams.</p>
+          <div class="chips" style="margin-top:1rem;">
+            <span class="chip">Dynamic JSON i18n</span>
+            <span class="chip">RTL fallback</span>
+            <span class="chip">3+ locales</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export + GDPR side-by-side -->
+      <div class="two-col" style="gap:3rem; align-items:flex-start;">
+        <div class="feature-card" style="flex:1;">
+          <div class="feature-icon">📦</div>
+          <h4>Evidence Bundle Export</h4>
+          <p>Full evidence export per incident — structured JSON bundle with all linked records, sources, and metadata. CSV export pipeline for all domains with one-click backup creation.</p>
+          <div class="chips" style="margin-top:1rem;">
+            <span class="chip">JSON bundle</span>
+            <span class="chip">CSV export</span>
+            <span class="chip">One-click backup</span>
+          </div>
+        </div>
+        <div class="feature-card" style="flex:1;">
+          <div class="feature-icon">🔒</div>
+          <h4>GDPR-Compliant Archival</h4>
+          <p>No personally identifiable data stored without consent. Source verification and attribution tracking on every record. OMOP CDM-compatible schema for analytics-database integration.</p>
+          <div class="chips" style="margin-top:1rem;">
+            <span class="chip">No PII without consent</span>
+            <span class="chip">Source attribution</span>
+            <span class="chip">OMOP CDM-ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STANDARDS & COMPLIANCE ── -->
+  <section style="background:var(--bg-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:3rem 0;">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Standards &amp; Data Governance</div>
+      <h2 style="font-size:2rem; margin-bottom:.5rem;">Data Integrity · GDPR-Ready · Evidence Chain</h2>
+      <p style="color:var(--text-2); margin-bottom:2rem;">Every record carries a verified source chain — no anonymous data ingestion.</p>
+
+      <div style="max-width:750px;">
+        <div class="compliance-row">
+          <span class="compliance-label">Multi-source data integration — news, NGO reports, institutional feeds</span>
+          <span class="compliance-badge badge-green">✓ Implemented</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">Source verification &amp; attribution tracking on every record</span>
+          <span class="compliance-badge badge-green">✓ Enforced</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">GDPR-compliant — no personally identifiable data stored without consent</span>
+          <span class="compliance-badge badge-green">✓ Compliant</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">Offline-capable SQLite extraction queue — zero data loss on connectivity loss</span>
+          <span class="compliance-badge badge-green">✓ Implemented</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">Structured incident taxonomy — 12 event types, hierarchical classification</span>
+          <span class="compliance-badge badge-green">✓ Defined</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">Full evidence bundle export (JSON) — per-incident, on-demand</span>
+          <span class="compliance-badge badge-green">✓ On-demand</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">CSV export pipeline — all domains, download &amp; backup creation</span>
+          <span class="compliance-badge badge-green">✓ Implemented</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">Multi-language support — dynamic JSON translation, 3+ locales</span>
+          <span class="compliance-badge badge-blue">✓ Active</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">GitHub Pages auto-detection &amp; dynamic path resolution</span>
+          <span class="compliance-badge badge-blue">✓ Implemented</span>
+        </div>
+        <div class="compliance-row">
+          <span class="compliance-label">OMOP CDM-compatible schema design — analytics-database ready</span>
+          <span class="compliance-badge badge-amber">◎ Ready</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TECH STACK ── -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Technology Stack</div>
+      <h2 style="font-size:2rem; margin-bottom:.5rem;">195 KB of Custom JS — No Framework</h2>
+      <p style="color:var(--text-2); margin-bottom:2rem;">Built from scratch across 8 layers.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem;">
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// Data Collection</div>
+          <div class="chips"><span class="chip">Flask + Python</span><span class="chip">BeautifulSoup</span><span class="chip">Batch URL Processor</span></div>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// NLP / AI</div>
+          <div class="chips"><span class="chip">spaCy</span><span class="chip">NER Pipeline</span><span class="chip">Confidence Scoring</span></div>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// Storage</div>
+          <div class="chips"><span class="chip">SQLite</span><span class="chip">JSON</span><span class="chip">CSV</span></div>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// Visualization</div>
+          <div class="chips"><span class="chip">Leaflet.js</span><span class="chip">D3</span><span class="chip">GeoJSON</span></div>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// Frontend</div>
+          <div class="chips"><span class="chip">Vanilla JS ES6</span><span class="chip">62KB Timeline Engine</span><span class="chip">67KB Map Engine</span></div>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// i18n</div>
+          <div class="chips"><span class="chip">Dynamic JSON Translation</span><span class="chip">RTL Support</span><span class="chip">Language Detection</span></div>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// Deployment</div>
+          <div class="chips"><span class="chip">GitHub Pages</span><span class="chip">CNAME</span><span class="chip">CI-ready</span></div>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.7rem; color:var(--crisis); margin-bottom:.6rem;">// Styling</div>
+          <div class="chips"><span class="chip">CSS Variables</span><span class="chip">Responsive</span><span class="chip">Dual Theme</span></div>
+        </div>
+      </div>
+
+      <!-- trio highlights -->
+      <div class="tech-trio">
+        <div class="card tech-trio-card">
+          <div class="tech-trio-num" style="color:var(--crisis);">195KB</div>
+          <div class="tech-trio-label">of custom JS — no React, no framework</div>
+        </div>
+        <div class="card tech-trio-card">
+          <div class="tech-trio-num" style="color:var(--crisis);">6 Active</div>
+          <div class="tech-trio-label">data domains — 23+ sub-pages in roadmap</div>
+        </div>
+        <div class="card tech-trio-card">
+          <div class="tech-trio-num" style="color:var(--crisis);">v1.3.0</div>
+          <div class="tech-trio-label">Active · last push April 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section style="background:var(--bg-2); border-top:1px solid var(--border); padding:4rem 0;">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Get in Touch</div>
+      <h2 style="font-size:2rem; margin-bottom:1rem;">Interested in CrisisScope?</h2>
+      <p style="color:var(--text-2); max-width:560px; line-height:1.7; margin-bottom:2.5rem;">
+        Whether you're an NGO, research institution, or journalist looking for structured
+        humanitarian data tooling — let's talk.
+      </p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; max-width:800px;">
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// Email</div>
+          <a href="mailto:aliattia2@gmail.com" style="font-size:.9rem;">aliattia2@gmail.com</a>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// GitHub</div>
+          <a href="https://github.com/aliattia02" target="_blank" rel="noopener" style="font-size:.9rem;">github.com/aliattia02</a>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// LinkedIn</div>
+          <a href="https://www.linkedin.com/in/ali-attia-74748bb4/" target="_blank" rel="noopener" style="font-size:.9rem;">Connect with me</a>
+        </div>
+        <div class="card" style="padding:1.25rem;">
+          <div style="font-family:var(--font-mono); font-size:.65rem; color:var(--crisis); margin-bottom:.5rem;">// Location</div>
+          <span style="font-size:.9rem; color:var(--text-2);">Frankfurt / Munich, Germany</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Ali Attia · <a href="index.html">Portfolio</a> · <a href="mailto:aliattia2@gmail.com">Contact</a></p>
+      <p style="margin-top:.4rem; font-size:.82rem; opacity:.6;">CrisisScope · NLP-Powered · GDPR-Ready · v1.3.0 · Frankfurt / Munich, Germany</p>
+    </div>
+  </footer>
+
+</body>
+</html>
