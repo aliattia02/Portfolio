@@ -287,6 +287,13 @@
       margin-left: auto;
     }
     @media (max-width: 640px) { .endpoint-desc { display: none; } }
+
+    /* ── Two-capability AI grid ── */
+    @media (max-width: 768px) {
+      [style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -312,9 +319,10 @@
       <h1 class="fade-up">E·OVR</h1>
       <p class="lead fade-up-2">
         Electronic Occurrence &amp; Variance Reporting — a production-grade healthcare
-        incident reporting platform with multi-tier role management, AI-assisted
-        classification, CSFLE field encryption, and scope-gated analytics across
-        facility, administration, governorate, and national levels.
+        incident reporting platform with multi-tier role management, NLP-powered
+        narrative analysis, ML-driven automated triage, CSFLE field encryption,
+        and scope-gated analytics across facility, administration, governorate,
+        and national levels.
       </p>
 
       <div class="proj-links fade-up-3">
@@ -325,7 +333,8 @@
       <div class="chips fade-up-4">
         <span class="tag">React 18 + FastAPI</span>
         <span class="tag amber">MongoDB CSFLE</span>
-        <span class="tag blue">AI Classification</span>
+        <span class="tag blue">NLP · Free-text Analysis</span>
+        <span class="tag blue">Automated Triage</span>
         <span class="tag">JWT Dual-Token</span>
         <span class="tag">Multi-Tier RBAC</span>
       </div>
@@ -426,8 +435,8 @@
         </div>
         <div class="feature-card">
           <div class="feature-icon">🤖</div>
-          <h4>AI Classification Hook</h4>
-          <p>Provider-adapter service supports OpenAI, Anthropic, and Google. On incident submission, the AI layer writes auto_classification, event_type, risk score, and signal flags — before the Mongo insert. Fully optional; failures never block submission.</p>
+          <h4>NLP + Automated Triage</h4>
+          <p>Two distinct AI capabilities: <strong style="color:var(--white);">NLP</strong> reads free-text narratives to extract the nuanced <em>why</em> behind incidents — going beyond rigid drop-down menus. <strong style="color:var(--white);">Automated triage</strong> ML-scores and flags high-risk events at submission time, surfacing critical cases instantly. Provider-agnostic: OpenAI, Anthropic, or Google — hot-swappable. AI failure never blocks submission.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">📊</div>
@@ -485,32 +494,91 @@
   <!-- ── AI LAYER ── -->
   <section>
     <div class="container">
-      <div class="two-col" style="gap:3.5rem; align-items:flex-start;">
-        <div>
-          <div class="label" style="margin-bottom:.75rem;">AI Classification</div>
-          <h2 style="font-size:1.8rem; margin-bottom:1rem;">Provider-Agnostic AI Layer</h2>
-          <p style="color:var(--text-2); margin-bottom:1.25rem;">
-            The AI hook fires inside the incident creation service before the Mongo insert.
-            If the provider call succeeds, structured metadata is written into
-            <code style="font-family:var(--font-mono); font-size:.83rem; color:#a5b4fc;">ai_metadata</code>:
-            auto-classification, event type, confidence score, risk estimate, and signal flags.
+      <div class="label" style="margin-bottom:.75rem;">AI &amp; Machine Learning</div>
+      <h2 style="font-size:1.8rem; margin-bottom:.5rem;">Two Distinct AI Capabilities</h2>
+      <p style="color:var(--text-2); max-width:620px; margin-bottom:2.5rem;">
+        E·OVR uses ML for two independent, named purposes — not as a single black-box classifier.
+        Each solves a different problem in the incident reporting lifecycle.
+      </p>
+
+      <!-- Two-capability cards -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:3rem;">
+
+        <!-- NLP Card -->
+        <div class="arch-card" style="border-color:var(--ovr-border); background:var(--ovr-dim); padding:2rem;">
+          <div class="arch-label">// Capability 01</div>
+          <div style="font-size:1.5rem; margin-bottom:.75rem;">🧠</div>
+          <h3 style="font-size:1.15rem; margin-bottom:.75rem;">Natural Language Processing</h3>
+          <p style="color:var(--text-2); font-size:.88rem; line-height:1.65; margin-bottom:1.25rem;">
+            Instead of relying purely on rigid, predefined drop-down menus, the ML layer
+            <strong style="color:var(--white);">reads and analyses the free-text narrative</strong>
+            submitted by staff — extracting the nuanced context of <em>how</em> and
+            <em>why</em> things go wrong.
           </p>
-          <p style="color:var(--text-2); margin-bottom:1.5rem;">
-            Quality admins review suggestions via the AIBadge — accepting or overriding the
-            classification. Feedback (AI suggestion vs. human choice) is stored as a labelled
-            dataset for future fine-tuning.
+          <p style="color:var(--text-2); font-size:.88rem; line-height:1.65; margin-bottom:1.25rem;">
+            Drop-downs capture what happened. NLP captures the story behind it —
+            contributing factors, environmental conditions, and edge cases that
+            checkbox forms systematically miss.
+          </p>
+          <div style="font-family:var(--font-mono); font-size:.72rem; color:var(--text-3); line-height:2;">
+            Populates → <span style="color:#818cf8;">auto_classification</span> ·
+            <span style="color:#818cf8;">auto_event_type</span> ·
+            <span style="color:#818cf8;">signal_flags</span>
+          </div>
+        </div>
+
+        <!-- Automated Triage Card -->
+        <div class="arch-card" style="border-color:var(--ovr-border); background:var(--ovr-dim); padding:2rem;">
+          <div class="arch-label">// Capability 02</div>
+          <div style="font-size:1.5rem; margin-bottom:.75rem;">⚡</div>
+          <h3 style="font-size:1.15rem; margin-bottom:.75rem;">Automated Triage &amp; Categorisation</h3>
+          <p style="color:var(--text-2); font-size:.88rem; line-height:1.65; margin-bottom:1.25rem;">
+            ML algorithms <strong style="color:var(--white);">automatically categorise incidents</strong>
+            and compute a risk score at submission time — helping quality teams sift through
+            massive datasets to <strong style="color:var(--white);">instantly flag critical or high-risk events</strong>
+            for immediate attention.
+          </p>
+          <p style="color:var(--text-2); font-size:.88rem; line-height:1.65; margin-bottom:1.25rem;">
+            Signal flags surface sentinel event indicators and pattern anomalies.
+            Complements — never replaces — the human risk matrix (severity × probability).
+            Both scores are stored and surfaced to quality admins side-by-side.
+          </p>
+          <div style="font-family:var(--font-mono); font-size:.72rem; color:var(--text-3); line-height:2;">
+            Populates → <span style="color:#818cf8;">ai_risk_score</span> ·
+            <span style="color:#818cf8;">classification_score</span> ·
+            <span style="color:#818cf8;">signal_flags</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Human feedback loop + provider strip -->
+      <div class="two-col" style="gap:3rem; align-items:flex-start;">
+        <div>
+          <div class="label" style="margin-bottom:.75rem;">Human-in-the-Loop</div>
+          <h3 style="font-size:1.25rem; margin-bottom:.75rem;">Quality Admin Review &amp; Feedback</h3>
+          <p style="color:var(--text-2); font-size:.9rem; line-height:1.65; margin-bottom:1rem;">
+            Quality admins review NLP and triage outputs via the AIBadge — accepting or
+            overriding the classification. Every review stores the AI suggestion alongside
+            the human choice, creating a <strong style="color:var(--white);">labelled dataset</strong>
+            for iterative model refinement.
+          </p>
+          <p style="color:var(--text-2); font-size:.9rem; line-height:1.65; margin-bottom:1.5rem;">
+            The provider adapter is <strong style="color:var(--white);">hot-swappable</strong> —
+            switching from OpenAI to Anthropic or Google requires only an environment variable change.
+            AI failure never blocks incident submission; fields remain null and workflow continues.
           </p>
           <div class="provider-row">
             <div class="provider-pill"><div class="dot"></div>OpenAI</div>
             <div class="provider-pill"><div class="dot"></div>Anthropic</div>
             <div class="provider-pill"><div class="dot"></div>Google Gemini</div>
-            <div class="provider-pill" style="opacity:.55;"><div class="dot" style="background:var(--text-3);"></div>Disabled (none)</div>
+            <div class="provider-pill" style="opacity:.5;"><div class="dot" style="background:var(--text-3);"></div>Disabled (none)</div>
           </div>
         </div>
         <div style="flex:1;">
           <div class="arch-card" style="margin-bottom:1rem;">
-            <div class="arch-label">// ai_metadata fields</div>
-            <div style="font-family:var(--font-mono); font-size:.75rem; color:var(--text-2); line-height:1.9;">
+            <div class="arch-label">// ai_metadata fields written</div>
+            <div style="font-family:var(--font-mono); font-size:.75rem; color:var(--text-2); line-height:2;">
               <span style="color:#818cf8;">auto_classification</span>   · string<br>
               <span style="color:#818cf8;">auto_event_type</span>        · string<br>
               <span style="color:#818cf8;">classification_score</span>   · float<br>
@@ -720,6 +788,8 @@
         <span class="chip">python-jose JWT</span>
         <span class="chip">passlib bcrypt</span>
         <span class="chip">MongoDB CSFLE</span>
+        <span class="chip">NLP — Free-text Analysis</span>
+        <span class="chip">Automated Triage ML</span>
         <span class="chip">OpenAI / Anthropic / Google</span>
         <span class="chip">SendGrid</span>
         <span class="chip">Vercel</span>
