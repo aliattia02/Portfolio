@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E·OVR — Healthcare Incident Reporting &amp; Analytics · Ali Attia</title>
+  <meta name="description" content="Production-grade healthcare incident reporting platform with multi-tier analytics, AI classification, CSFLE encryption, and controlled investigation workflows." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── OVR accent colour (indigo/cobalt — distinct from DiaTwin teal) ── */
+    :root {
+      --ovr: #4f6ef7;
+      --ovr-dim: rgba(79,110,247,.12);
+      --ovr-border: rgba(79,110,247,.22);
+      --ovr-dark: #1a1f3c;
+    }
+
+    /* Hero gradient */
+    .proj-hero {
+      background: linear-gradient(160deg, var(--bg) 45%, #0d1230 100%);
+    }
+
+    /* Replace teal-coloured accents with --ovr */
+    .proj-hero .label { color: var(--ovr); }
+
+    /* ── Validation / highlight bar ── */
+    .highlight-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      background: var(--ovr-dim);
+      border: 1px solid var(--ovr-border);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      margin-top: 2rem;
+    }
+    .highlight-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+    .highlight-bar p {
+      font-size: .95rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .highlight-bar strong { color: var(--white); }
+
+    /* ── Role-tier badge strip ── */
+    .tier-strip {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 2.5rem 0;
+    }
+    .tier-cell {
+      flex: 1;
+      padding: .9rem .75rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      background: var(--bg-2);
+      transition: background .2s;
+    }
+    .tier-cell:last-child { border-right: none; }
+    .tier-cell:hover { background: var(--ovr-dim); }
+    .tier-num {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      color: var(--ovr);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .35rem;
+    }
+    .tier-name {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .2rem;
+    }
+    .tier-scope {
+      font-size: .72rem;
+      color: var(--text-3);
+    }
+    @media (max-width: 768px) {
+      .tier-strip { flex-direction: column; }
+      .tier-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .tier-cell:last-child { border-bottom: none; }
+    }
+
+    /* ── Workflow state machine diagram ── */
+    .flow-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .5rem;
+      padding: 2rem;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-top: 2rem;
+    }
+    .flow-state {
+      padding: .45rem 1rem;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      font-weight: 600;
+      border: 1px solid;
+    }
+    .flow-state.created    { background: rgba(100,116,139,.15); border-color: rgba(100,116,139,.4); color: #94a3b8; }
+    .flow-state.inprog     { background: rgba(79,110,247,.12);  border-color: rgba(79,110,247,.4);  color: #818cf8; }
+    .flow-state.eval       { background: rgba(234,179,8,.1);    border-color: rgba(234,179,8,.4);   color: #fbbf24; }
+    .flow-state.moreinfo   { background: rgba(249,115,22,.1);   border-color: rgba(249,115,22,.4);  color: #fb923c; }
+    .flow-state.action     { background: rgba(16,185,129,.1);   border-color: rgba(16,185,129,.4);  color: #34d399; }
+    .flow-state.completed  { background: rgba(16,185,129,.2);   border-color: rgba(16,185,129,.6);  color: #6ee7b7; }
+    .flow-arrow {
+      font-size: .85rem;
+      color: var(--text-3);
+    }
+    .flow-branch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .35rem;
+    }
+    .flow-branch-label {
+      font-size: .62rem;
+      color: var(--text-3);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Architecture grid (3-col) ── */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .arch-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .arch-card .arch-label {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      color: var(--ovr);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    .arch-card h4 { font-size: 1rem; margin-bottom: .5rem; }
+    .arch-card p  { font-size: .88rem; color: var(--text-2); line-height: 1.55; }
+    .arch-stack {
+      margin-top: .75rem;
+      font-family: var(--font-mono);
+      font-size: .67rem;
+      color: var(--text-3);
+    }
+    @media (max-width: 768px) { .arch-grid { grid-template-columns: 1fr; } }
+
+    /* ── Security / encryption callout ── */
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .security-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.25rem;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .security-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+    .security-item h5 { font-size: .92rem; margin-bottom: .3rem; }
+    .security-item p  { font-size: .83rem; color: var(--text-2); line-height: 1.5; }
+    @media (max-width: 640px) { .security-grid { grid-template-columns: 1fr; } }
+
+    /* ── AI provider pill row ── */
+    .provider-row {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .provider-pill {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .35rem .85rem;
+      border-radius: 999px;
+      border: 1px solid var(--ovr-border);
+      background: var(--ovr-dim);
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: #a5b4fc;
+    }
+    .provider-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--ovr);
+    }
+
+    /* ── Analytics tier-gate table ── */
+    .analytics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .85rem;
+      margin-top: 1.5rem;
+    }
+    .analytics-table th {
+      text-align: left;
+      padding: .6rem 1rem;
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      letter-spacing: .1em;
+      color: var(--ovr);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .analytics-table td {
+      padding: .65rem 1rem;
+      color: var(--text-2);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .analytics-table tr:hover td { background: var(--ovr-dim); }
+    .check { color: #34d399; }
+    .dash  { color: var(--text-3); }
+
+    /* ── API endpoint list ── */
+    .endpoint-group {
+      margin-bottom: 2rem;
+    }
+    .endpoint-group-label {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      color: var(--ovr);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    .endpoint-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .55rem .9rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      margin-bottom: .35rem;
+      transition: border-color .15s, background .15s;
+    }
+    .endpoint-row:hover {
+      background: var(--ovr-dim);
+      border-color: var(--ovr-border);
+    }
+    .method {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      font-weight: 700;
+      padding: .15rem .5rem;
+      border-radius: 4px;
+      min-width: 46px;
+      text-align: center;
+    }
+    .method.get    { background: rgba(16,185,129,.15); color: #34d399; }
+    .method.post   { background: rgba(79,110,247,.15); color: #818cf8; }
+    .method.patch  { background: rgba(234,179,8,.12);  color: #fbbf24; }
+    .endpoint-path {
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      color: var(--text-2);
+    }
+    .endpoint-desc {
+      font-size: .78rem;
+      color: var(--text-3);
+      margin-left: auto;
+    }
+    @media (max-width: 640px) { .endpoint-desc { display: none; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Ali<span>.</span>Attia</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="proj-hero">
+    <div class="container">
+      <a href="index.html" class="back-link">← Back to Portfolio</a>
+
+      <div class="label" style="margin-bottom:1.25rem;">Full-Stack System · Healthcare · 2024–2025</div>
+      <h1 class="fade-up">E·OVR</h1>
+      <p class="lead fade-up-2">
+        Electronic Occurrence &amp; Variance Reporting — a production-grade healthcare
+        incident reporting platform with multi-tier role management, AI-assisted
+        classification, CSFLE field encryption, and scope-gated analytics across
+        facility, administration, governorate, and national levels.
+      </p>
+
+      <div class="proj-links fade-up-3">
+        <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="btn btn-primary">GitHub ↗</a>
+        <a href="#architecture" class="btn btn-outline">Architecture ↓</a>
+      </div>
+
+      <div class="chips fade-up-4">
+        <span class="tag">React 18 + FastAPI</span>
+        <span class="tag amber">MongoDB CSFLE</span>
+        <span class="tag blue">AI Classification</span>
+        <span class="tag">JWT Dual-Token</span>
+        <span class="tag">Multi-Tier RBAC</span>
+      </div>
+
+      <div class="highlight-bar fade-up-4">
+        <div class="highlight-icon">🏥</div>
+        <p>
+          End-to-end incident lifecycle management: anonymous <strong>patient submission</strong>
+          → AI-assisted triage → controlled <strong>5-stage workflow</strong> → CAPA → final report.
+          Scope-filtered analytics served to <strong>5 organisational tiers</strong> from facility
+          up to national level. Medical identifiers protected with
+          <strong>client-side field-level encryption (CSFLE)</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KEY STATS ── -->
+  <section style="padding:3rem 0;">
+    <div class="container">
+      <div class="stat-grid">
+        <div class="stat-block">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Organisational Tiers &amp; Roles</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Workflow States (State Machine)</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">3</span>
+          <span class="stat-label">AI Providers (OpenAI / Anthropic / Google)</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">35+</span>
+          <span class="stat-label">REST API Endpoints</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── ROLE TIER STRIP ── -->
+  <section>
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Access Control</div>
+      <h2 style="font-size:2rem; margin-bottom:.75rem;">Five-Tier Role Architecture</h2>
+      <p style="color:var(--text-2); max-width:600px;">
+        Every API endpoint and analytics query is gated by tier. Scope filters cascade
+        automatically — a facility user only ever sees their own incidents; national
+        management sees all.
+      </p>
+
+      <div class="tier-strip">
+        <div class="tier-cell">
+          <div class="tier-num">Tier 1–2</div>
+          <div class="tier-name">Staff Reporter</div>
+          <div class="tier-scope">Own incidents · Submit · Read</div>
+        </div>
+        <div class="tier-cell">
+          <div class="tier-num">Tier 2</div>
+          <div class="tier-name">Quality Admin</div>
+          <div class="tier-scope">Facility · Full workflow · AI review</div>
+        </div>
+        <div class="tier-cell">
+          <div class="tier-num">Tier 3</div>
+          <div class="tier-name">Administration Mgr</div>
+          <div class="tier-scope">Administration · Read + Analytics</div>
+        </div>
+        <div class="tier-cell">
+          <div class="tier-num">Tier 4</div>
+          <div class="tier-name">Governorate Mgr</div>
+          <div class="tier-scope">Governorate · Compare Analytics</div>
+        </div>
+        <div class="tier-cell">
+          <div class="tier-num">Tier 5</div>
+          <div class="tier-name">Top Management</div>
+          <div class="tier-scope">National · Provision · All analytics</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── CORE FEATURES ── -->
+  <section>
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Core Features</div>
+      <h2 style="font-size:2rem; margin-bottom:2.5rem;">What E·OVR Does</h2>
+
+      <div class="feature-grid" style="margin-bottom:3.5rem;">
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h4>Controlled Incident Workflow</h4>
+          <p>Strict 5-stage state machine: Created → InProgress → Evaluating → ActionTaken → Completed, with a MoreInfoNeeded loop. Every transition is validated server-side and appended to an immutable audit trail.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h4>AI Classification Hook</h4>
+          <p>Provider-adapter service supports OpenAI, Anthropic, and Google. On incident submission, the AI layer writes auto_classification, event_type, risk score, and signal flags — before the Mongo insert. Fully optional; failures never block submission.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h4>Scope-Gated Analytics</h4>
+          <p>Aggregation pipeline serves status/severity breakdowns, monthly trend series, and facility comparison charts. Each endpoint enforces a minimum tier — tier 2 for summary, tier 3 for trends, tier 4 for cross-facility comparison.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h4>CSFLE Field Encryption</h4>
+          <p>MongoDB Client-Side Field Level Encryption protects medical_file_number with AES-256 deterministic encryption before it ever leaves the application. Works independently of server-side encryption; plaintext never transits the wire.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h4>Anonymous Patient Reporting</h4>
+          <p>Each facility gets a UUID-based public link. Patients submit incidents without any login. The UUID maps to a facility server-side; the patient's incident is created as reporter_type=patient and enters the same workflow.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h4>Dual-Token Auth + Silent Refresh</h4>
+          <p>Short-lived access token in memory + long-lived refresh token in httpOnly cookie, hashed in DB. Axios interceptor silently refreshes on 401 and retries the original request. Logout invalidates the stored hash.</p>
+        </div>
+      </div>
+
+      <!-- ── Workflow state machine visual ── -->
+      <div class="label" style="margin-bottom:.75rem;">Incident Lifecycle</div>
+      <h3 style="font-size:1.5rem; margin-bottom:.5rem;">State Machine</h3>
+      <p style="color:var(--text-2); font-size:.9rem; max-width:560px;">
+        Invalid transitions return HTTP 400. Every valid transition appends a timestamped
+        audit entry — including user ID, old status, and new status.
+      </p>
+      <div class="flow-wrap">
+        <div class="flow-state created">Created</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-state inprog">In Progress</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-branch">
+          <div style="display:flex; align-items:center; gap:.5rem;">
+            <div class="flow-state eval">Evaluating</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:.35rem; margin-top:.35rem;">
+            <div class="flow-branch-label">⇅ loop</div>
+            <div class="flow-state moreinfo">More Info Needed</div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-state action">Action Taken</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-state completed">Completed</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── AI LAYER ── -->
+  <section>
+    <div class="container">
+      <div class="two-col" style="gap:3.5rem; align-items:flex-start;">
+        <div>
+          <div class="label" style="margin-bottom:.75rem;">AI Classification</div>
+          <h2 style="font-size:1.8rem; margin-bottom:1rem;">Provider-Agnostic AI Layer</h2>
+          <p style="color:var(--text-2); margin-bottom:1.25rem;">
+            The AI hook fires inside the incident creation service before the Mongo insert.
+            If the provider call succeeds, structured metadata is written into
+            <code style="font-family:var(--font-mono); font-size:.83rem; color:#a5b4fc;">ai_metadata</code>:
+            auto-classification, event type, confidence score, risk estimate, and signal flags.
+          </p>
+          <p style="color:var(--text-2); margin-bottom:1.5rem;">
+            Quality admins review suggestions via the AIBadge — accepting or overriding the
+            classification. Feedback (AI suggestion vs. human choice) is stored as a labelled
+            dataset for future fine-tuning.
+          </p>
+          <div class="provider-row">
+            <div class="provider-pill"><div class="dot"></div>OpenAI</div>
+            <div class="provider-pill"><div class="dot"></div>Anthropic</div>
+            <div class="provider-pill"><div class="dot"></div>Google Gemini</div>
+            <div class="provider-pill" style="opacity:.55;"><div class="dot" style="background:var(--text-3);"></div>Disabled (none)</div>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div class="arch-card" style="margin-bottom:1rem;">
+            <div class="arch-label">// ai_metadata fields</div>
+            <div style="font-family:var(--font-mono); font-size:.75rem; color:var(--text-2); line-height:1.9;">
+              <span style="color:#818cf8;">auto_classification</span>   · string<br>
+              <span style="color:#818cf8;">auto_event_type</span>        · string<br>
+              <span style="color:#818cf8;">classification_score</span>   · float<br>
+              <span style="color:#818cf8;">ai_risk_score</span>          · int<br>
+              <span style="color:#818cf8;">signal_flags</span>           · string[]<br>
+              <span style="color:#818cf8;">model_version</span>          · string<br>
+              <span style="color:#818cf8;">human_reviewed</span>         · bool<br>
+              <span style="color:#818cf8;">feedback.ai_suggested</span>  · string<br>
+              <span style="color:#818cf8;">feedback.human_chose</span>   · string<br>
+            </div>
+          </div>
+          <p style="font-size:.78rem; color:var(--text-3);">
+            AI failure never blocks incident save — fields remain null and the form submits successfully.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── ANALYTICS ── -->
+  <section>
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Data &amp; Analytics</div>
+      <h2 style="font-size:2rem; margin-bottom:.75rem;">Tier-Gated Analytics Dashboard</h2>
+      <p style="color:var(--text-2); max-width:580px;">
+        MongoDB aggregation pipelines serve summary cards, monthly trend series, and
+        cross-facility comparison charts. Backend scope filters ensure each tier only
+        sees data it is authorised to access.
+      </p>
+
+      <table class="analytics-table">
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>Minimum Tier</th>
+            <th>Staff</th>
+            <th>Quality Admin</th>
+            <th>Admin Mgr</th>
+            <th>Gov. Mgr</th>
+            <th>Top Mgmt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code style="font-family:var(--font-mono); font-size:.8rem;">GET /analytics/summary</code></td>
+            <td>Tier 2</td>
+            <td class="dash">—</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td><code style="font-family:var(--font-mono); font-size:.8rem;">GET /analytics/trends</code></td>
+            <td>Tier 3</td>
+            <td class="dash">—</td>
+            <td class="dash">—</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+          </tr>
+          <tr>
+            <td><code style="font-family:var(--font-mono); font-size:.8rem;">GET /analytics/compare</code></td>
+            <td>Tier 4</td>
+            <td class="dash">—</td>
+            <td class="dash">—</td>
+            <td class="dash">—</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="chips" style="margin-top:1.5rem;">
+        <span class="chip">Status breakdown</span>
+        <span class="chip">Severity pie chart</span>
+        <span class="chip">Monthly trend line</span>
+        <span class="chip">Facility comparison bar</span>
+        <span class="chip">Recharts</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── ARCHITECTURE ── -->
+  <section id="architecture" style="background:var(--bg-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">Technical Architecture</div>
+      <h2 style="font-size:2rem; margin-bottom:2.5rem;">Full-Stack Monorepo</h2>
+
+      <div class="arch-grid">
+        <div class="arch-card">
+          <div class="arch-label">// Frontend</div>
+          <h4>React 18 SPA</h4>
+          <p>Role-driven sidebar routing, React Query for server state, React Hook Form for incident submission, and Recharts for analytics visualisations. Vite dev server proxies /api/* to backend.</p>
+          <div class="arch-stack">React 18 · React Router · React Query · Recharts · Vite · Vercel</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-label">// Backend</div>
+          <h4>FastAPI + Motor</h4>
+          <p>Async MongoDB driver (Motor) with FastAPI lifespan for connection lifecycle. Routers: auth, incidents, analytics, facilities, users, patients. CSFLE auto-encryption applied at startup.</p>
+          <div class="arch-stack">FastAPI · Motor · Pydantic · python-jose · passlib · Render</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-label">// Data Layer</div>
+          <h4>MongoDB Atlas</h4>
+          <p>Collections: incidents, users, facilities, model_registry. Aggregation pipelines for analytics. CSFLE schema map targets medical_file_number with deterministic AES-256 encryption.</p>
+          <div class="arch-stack">MongoDB Atlas · CSFLE · Aggregation Pipelines · SendGrid</div>
+        </div>
+      </div>
+
+      <!-- Security section -->
+      <div style="margin-top:3rem;">
+        <div class="label" style="margin-bottom:.75rem;">Security Model</div>
+        <h3 style="font-size:1.5rem; margin-bottom:.25rem;">Defence in Depth</h3>
+        <div class="security-grid">
+          <div class="security-item">
+            <div class="security-icon">🔑</div>
+            <div>
+              <h5>Dual-Token JWT</h5>
+              <p>15-min access token in memory + 30-day refresh token in httpOnly cookie. Refresh tokens are hashed in DB; up to 10 retained per user. Logout invalidates hash.</p>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-icon">🧬</div>
+            <div>
+              <h5>CSFLE Encryption</h5>
+              <p>medical_file_number encrypted client-side with AEAD-AES-256-CBC-HMAC-SHA-512 (deterministic). Local KMS master key; plaintext never reaches the server wire.</p>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-icon">🛂</div>
+            <div>
+              <h5>Role Gating</h5>
+              <p>require_role(...) FastAPI dependency at every router. Scope filter builds Mongo queries dynamically — facility / administration / governorate / all — based on JWT claims.</p>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-icon">🔗</div>
+            <div>
+              <h5>Patient UUID Links</h5>
+              <p>UUID v4 per facility grants anonymous submission only — no read access, no auth tokens. Incident is tagged reporter_type=patient and enters standard workflow.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── API REFERENCE ── -->
+  <section>
+    <div class="container">
+      <div class="label" style="margin-bottom:.75rem;">API Reference</div>
+      <h2 style="font-size:2rem; margin-bottom:2.5rem;">Key Endpoints</h2>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-label">// auth</div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/auth/login</span><span class="endpoint-desc">Issue access + refresh tokens</span></div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/auth/refresh</span><span class="endpoint-desc">Silent token refresh via cookie</span></div>
+        <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/auth/me</span><span class="endpoint-desc">Current user profile</span></div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-label">// incidents</div>
+        <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/incidents/</span><span class="endpoint-desc">Scoped incident list</span></div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/incidents/</span><span class="endpoint-desc">Create + AI hook + insert</span></div>
+        <div class="endpoint-row"><span class="method patch">PATCH</span><span class="endpoint-path">/incidents/{id}/status</span><span class="endpoint-desc">State machine transition</span></div>
+        <div class="endpoint-row"><span class="method patch">PATCH</span><span class="endpoint-path">/incidents/{id}/assessment</span><span class="endpoint-desc">Risk matrix save</span></div>
+        <div class="endpoint-row"><span class="method patch">PATCH</span><span class="endpoint-path">/incidents/{id}/actions</span><span class="endpoint-desc">CAPA corrective/preventive</span></div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/incidents/{id}/final</span><span class="endpoint-desc">Finalise → Completed</span></div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/incidents/{id}/ai-feedback</span><span class="endpoint-desc">Accept / override AI suggestion</span></div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-label">// analytics</div>
+        <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/analytics/summary</span><span class="endpoint-desc">Status / severity breakdown (tier ≥2)</span></div>
+        <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/analytics/trends</span><span class="endpoint-desc">Monthly series (tier ≥3)</span></div>
+        <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/analytics/compare</span><span class="endpoint-desc">Facility comparison (tier ≥4)</span></div>
+      </div>
+
+      <div class="endpoint-group">
+        <div class="endpoint-group-label">// patients · users</div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/patients/submit/{uuid}</span><span class="endpoint-desc">Anonymous patient submission</span></div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/users/provision/facility/{id}</span><span class="endpoint-desc">Provision staff + quality admin</span></div>
+        <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/users/provision/tier</span><span class="endpoint-desc">Provision tier 3–5 users</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TECH CHIPS ── -->
+  <section style="background:var(--bg-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:2.5rem 0;">
+    <div class="container">
+      <div class="label" style="margin-bottom:1rem;">Tech Stack</div>
+      <div class="chips">
+        <span class="chip">React 18</span>
+        <span class="chip">React Router</span>
+        <span class="chip">React Query</span>
+        <span class="chip">React Hook Form</span>
+        <span class="chip">Recharts</span>
+        <span class="chip">Vite</span>
+        <span class="chip">FastAPI</span>
+        <span class="chip">Motor (async MongoDB)</span>
+        <span class="chip">Pydantic</span>
+        <span class="chip">python-jose JWT</span>
+        <span class="chip">passlib bcrypt</span>
+        <span class="chip">MongoDB CSFLE</span>
+        <span class="chip">OpenAI / Anthropic / Google</span>
+        <span class="chip">SendGrid</span>
+        <span class="chip">Vercel</span>
+        <span class="chip">Render</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Ali Attia · <a href="index.html">Portfolio</a> · <a href="mailto:aliattia2@gmail.com">Contact</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
