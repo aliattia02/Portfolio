@@ -3,143 +3,773 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DeutschMind — German Language Platform · Ali Attia</title>
-  <meta name="description" content="Zero-dependency German learning platform. 3,000+ vocabulary, 60+ grammar topics, CEFR A1–C2, FSP module for healthcare professionals. No npm, no bundlers." />
-  <link rel="stylesheet" href="style.css" />
+  <title>Projects — Ali Attia · Full-Stack Builder</title>
+  <meta name="description" content="Ali Attia — Full-stack builder. Database engine from scratch to LMS platform. Projects spanning storage systems, language platforms, and everything between." />
   <style>
-    .proj-hero { background: linear-gradient(160deg, var(--bg) 50%, #0a1505 100%); }
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .gender-legend {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 1.5rem;
+    :root {
+      --bg:        #07100a;
+      --bg-2:      #0d1a10;
+      --bg-3:      #111f14;
+      --border:    rgba(255,255,255,.08);
+      --border-2:  rgba(255,255,255,.14);
+      --teal:      #34d399;
+      --teal-dim:  #1a6644;
+      --blue:      #60a5fa;
+      --blue-dim:  #1e3a5f;
+      --amber:     #fbbf24;
+      --amber-dim: #5c3d0a;
+      --red:       #f87171;
+      --text-1:    #f0f4f0;
+      --text-2:    #8fa88f;
+      --text-3:    #4d6450;
+      --font-head: 'Georgia', 'Times New Roman', serif;
+      --font-mono: 'Courier New', 'Lucida Console', monospace;
+      --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --radius:    10px;
     }
 
-    .gender-pill {
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; border-radius: var(--radius); }
+
+    /* ── Utility ── */
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 2rem; }
+    .divider { height: 1px; background: var(--border); margin: 3rem 0; }
+    .label {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--teal);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7,16,10,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 60px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { font-family: var(--font-head); font-size: 1.15rem; font-weight: 700; color: var(--text-1); }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { list-style: none; display: flex; gap: 2rem; }
+    .nav-links a { font-size: .85rem; color: var(--text-2); transition: color .2s; }
+    .nav-links a:hover { color: var(--text-1); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 6rem 0 4rem;
+      background: linear-gradient(160deg, var(--bg) 40%, #071a0d 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 80% 40%, rgba(52,211,153,.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
       gap: .5rem;
-      padding: .4rem 1rem;
+      background: rgba(52,211,153,.07);
+      border: 1px solid rgba(52,211,153,.2);
       border-radius: 99px;
+      padding: .35rem 1rem;
       font-family: var(--font-mono);
-      font-size: .8rem;
+      font-size: .72rem;
+      color: var(--teal);
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
       font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--teal); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      max-width: 640px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
     }
 
-    .gender-pill.der { background: rgba(37,99,235,.12); border: 1px solid rgba(37,99,235,.3); color: var(--blue); }
-    .gender-pill.die { background: rgba(220,38,38,.12); border: 1px solid rgba(220,38,38,.3); color: var(--red); }
-    .gender-pill.das { background: rgba(0,137,123,.12); border: 1px solid rgba(0,137,123,.3); color: var(--teal); }
+    /* Stack Spectrum */
+    .stack-spectrum {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 3rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .stack-layer {
+      flex: 1;
+      padding: 1rem .75rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+      transition: background .2s;
+    }
+    .stack-layer:last-child { border-right: none; }
+    .stack-layer.active { background: rgba(52,211,153,.06); }
+    .stack-layer.semi { background: rgba(52,211,153,.03); }
+    .stack-layer .layer-icon {
+      font-size: 1.1rem;
+      margin-bottom: .4rem;
+    }
+    .stack-layer .layer-name {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-3);
+      display: block;
+      margin-bottom: .2rem;
+    }
+    .stack-layer .layer-tag {
+      font-size: .72rem;
+      color: var(--text-2);
+    }
+    .stack-layer.active .layer-name { color: var(--teal); }
+    .stack-layer.active .layer-tag { color: var(--text-1); font-weight: 600; }
+    .stack-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 .25rem;
+      color: var(--text-3);
+      font-size: .8rem;
+    }
 
+    /* ── Section headers ── */
+    .section-head { margin-bottom: 3rem; }
+    .section-head h2 {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      margin: .5rem 0 .75rem;
+    }
+    .section-head p { color: var(--text-2); max-width: 560px; font-size: 1rem; }
+
+    /* ── Project Sections ── */
+    .proj-section { padding: 5rem 0; }
+    .proj-section + .proj-section { border-top: 1px solid var(--border); }
+
+    /* Project Header */
+    .proj-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .proj-title-group {}
+    .proj-number {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--text-3);
+      letter-spacing: .1em;
+      display: block;
+      margin-bottom: .5rem;
+    }
+    .proj-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: .75rem;
+    }
+    .proj-title em { font-style: normal; color: var(--teal); }
+    .proj-tagline { color: var(--text-2); font-size: 1rem; max-width: 520px; }
+
+    .proj-actions { display: flex; gap: .75rem; align-items: center; flex-shrink: 0; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .6rem 1.3rem;
+      border-radius: var(--radius);
+      font-size: .85rem;
+      font-weight: 600;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: #07100a;
+    }
+    .btn-primary:hover { background: #5fdfae; }
+    .btn-outline {
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      padding: .3rem .75rem;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      background: var(--bg-2);
+    }
+    .tag.teal { border-color: rgba(52,211,153,.3); color: var(--teal); background: rgba(52,211,153,.05); }
+    .tag.blue  { border-color: rgba(96,165,250,.3);  color: var(--blue);  background: rgba(96,165,250,.05); }
+    .tag.amber { border-color: rgba(251,191,36,.3);  color: var(--amber); background: rgba(251,191,36,.05); }
+
+    /* ── Stat Grid ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    .stat-block {
+      background: var(--bg-2);
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+    .stat-num {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--text-3);
+    }
+
+    /* ── Feature Grid ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    .feature-card {
+      background: var(--bg-2);
+      padding: 1.75rem 1.5rem;
+    }
+    .feature-card:hover { background: var(--bg-3); }
+    .feature-icon { font-size: 1.4rem; margin-bottom: .75rem; }
+    .feature-card h4 {
+      font-size: .95rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+      color: var(--text-1);
+    }
+    .feature-card p { font-size: .875rem; color: var(--text-2); line-height: 1.6; }
+
+    /* ── Two col ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .two-col.reverse > *:first-child { order: 2; }
+    .two-col.reverse > *:last-child  { order: 1; }
+
+    /* ── Architecture diagram ── */
+    .arch-diagram {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      font-family: var(--font-mono);
+    }
+    .arch-row {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      margin-bottom: .5rem;
+    }
+    .arch-box {
+      flex: 1;
+      padding: .6rem .75rem;
+      border-radius: 6px;
+      font-size: .75rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: .04em;
+    }
+    .arch-box.teal  { background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.3); color: var(--teal); }
+    .arch-box.blue  { background: rgba(96,165,250,.10); border: 1px solid rgba(96,165,250,.25); color: var(--blue); }
+    .arch-box.amber { background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.22); color: var(--amber); }
+    .arch-box.gray  { background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text-2); }
+    .arch-sep {
+      text-align: center;
+      color: var(--text-3);
+      font-size: .7rem;
+      margin: .25rem 0;
+    }
+    .arch-label {
+      font-size: .62rem;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    /* ── Screenshot placeholder ── */
+    .proj-screenshot {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .screenshot-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: .75rem;
+      color: var(--text-3);
+      font-family: var(--font-mono);
+      font-size: .75rem;
+    }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem 1rem;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      font-weight: 600;
+    }
+    .badge.amber { background: rgba(251,191,36,.07); border: 1px solid rgba(251,191,36,.2); color: var(--amber); }
+    .badge.teal  { background: rgba(52,211,153,.07);  border: 1px solid rgba(52,211,153,.2); color: var(--teal); }
+
+    /* ── Tech chips ── */
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .chip {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .3rem .65rem;
+      color: var(--text-2);
+    }
+
+    /* ── CEFR ── */
     .cefr-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: .75rem;
     }
-
     .cefr-level {
       text-align: center;
       padding: 1rem .5rem;
       background: var(--bg-2);
       border: 1px solid var(--border);
       border-radius: 8px;
-      transition: all .25s;
+      transition: border-color .25s;
     }
-
     .cefr-level:hover { border-color: var(--teal); }
+    .cefr-code { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--teal); display: block; }
+    .cefr-label { font-family: var(--font-mono); font-size: .62rem; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; }
 
-    .cefr-code {
-      font-family: var(--font-head);
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--teal);
-      display: block;
+    /* ── Gender Pills ── */
+    .gender-legend { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+    .gender-pill {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .35rem .85rem; border-radius: 99px;
+      font-family: var(--font-mono); font-size: .75rem; font-weight: 700;
+    }
+    .gender-pill.der { background: rgba(96,165,250,.1); border: 1px solid rgba(96,165,250,.3); color: var(--blue); }
+    .gender-pill.die { background: rgba(248,113,113,.1); border: 1px solid rgba(248,113,113,.3); color: var(--red); }
+    .gender-pill.das { background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.3); color: var(--teal); }
+
+    /* ── Tech section ── */
+    .tech-band {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 0;
     }
 
-    .cefr-label {
-      font-family: var(--font-mono);
-      font-size: .62rem;
+    /* ── Footer ── */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: .85rem;
       color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: .06em;
     }
+    footer a { color: var(--text-2); }
+    footer a:hover { color: var(--teal); }
 
-    .zero-dep-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      background: rgba(245,166,35,.08);
-      border: 1px solid rgba(245,166,35,.25);
-      border-radius: 8px;
-      padding: .75rem 1.25rem;
-      font-family: var(--font-mono);
-      font-size: .75rem;
-      color: var(--amber);
-      margin-top: 1.5rem;
+    /* ── Fade animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
+    .fade-up   { animation: fadeUp .6s ease both; }
+    .fade-up-2 { animation: fadeUp .6s .12s ease both; }
+    .fade-up-3 { animation: fadeUp .6s .24s ease both; }
+    .fade-up-4 { animation: fadeUp .6s .36s ease both; }
+    .fade-up-5 { animation: fadeUp .6s .48s ease both; }
 
-    @media (max-width: 600px) {
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr; }
+      .two-col.reverse > *:first-child { order: unset; }
+      .two-col.reverse > *:last-child  { order: unset; }
+      .stack-spectrum { flex-wrap: wrap; }
       .cefr-grid { grid-template-columns: repeat(3,1fr); }
+      .proj-header { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">Ali<span>.</span>Attia</a>
       <ul class="nav-links">
         <li><a href="index.html#about">About</a></li>
         <li><a href="index.html#skills">Skills</a></li>
-        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section class="proj-hero">
+  <section class="hero">
     <div class="container">
-      <a href="index.html" class="back-link">← Back to Portfolio</a>
-
-      <div class="label" style="margin-bottom:1.25rem;">Open Source · Zero Dependencies · Web Platform</div>
-      <h1 class="fade-up">DeutschMind</h1>
-      <p class="lead fade-up-2">
-        A fully static, browser-native German language learning platform — no npm, no bundlers,
-        no CDN imports. 3,000+ vocabulary entries, 60+ grammar topics, and a specialised
-        Fachsprachenpüfung (FSP) module for healthcare professionals.
+      <div class="hero-eyebrow fade-up">
+        ⬡ Full-Stack Builder · Storage to Product
+      </div>
+      <h1 class="fade-up-2">
+        Built from the<br>
+        <em>metal up.</em>
+      </h1>
+      <p class="hero-sub fade-up-3">
+        I don't just build on top of abstractions — I build the abstractions.
+        From a custom database storage engine to a fully static LMS platform,
+        every layer of the stack has been written by hand, deliberately.
       </p>
 
-      <div class="proj-links fade-up-3">
-        <a href="https://aliattia02.github.io/DeutschMind" target="_blank" rel="noopener" class="btn btn-primary">Live Platform ↗</a>
-        <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
+      <div class="stack-spectrum fade-up-4">
+        <div class="stack-layer active">
+          <div class="layer-icon">🗄️</div>
+          <span class="layer-name">Storage</span>
+          <span class="layer-tag">DB Engine</span>
+        </div>
+        <div class="stack-layer semi">
+          <div class="layer-icon">⚙️</div>
+          <span class="layer-name">Engine</span>
+          <span class="layer-tag">Query / I/O</span>
+        </div>
+        <div class="stack-layer semi">
+          <div class="layer-icon">🧠</div>
+          <span class="layer-name">Logic</span>
+          <span class="layer-tag">Data Model</span>
+        </div>
+        <div class="stack-layer semi">
+          <div class="layer-icon">🌐</div>
+          <span class="layer-name">Interface</span>
+          <span class="layer-tag">Vanilla JS</span>
+        </div>
+        <div class="stack-layer active">
+          <div class="layer-icon">📚</div>
+          <span class="layer-name">Product</span>
+          <span class="layer-tag">LMS / DeutschMind</span>
+        </div>
       </div>
 
-      <div class="chips fade-up-4">
-        <span class="tag">Zero Dependencies</span>
-        <span class="tag">CEFR A1 – C2</span>
-        <span class="tag amber">FSP Healthcare Module</span>
-        <span class="tag blue">Web Speech API</span>
+      <p class="fade-up-5" style="font-family:var(--font-mono); font-size:.72rem; color:var(--text-3); margin-top:1rem; letter-spacing:.06em;">
+        ↑ BOTH LAYERS OWNED END-TO-END, ZERO FRAMEWORKS REQUIRED
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PROJECT 01 — DATABASE ENGINE
+  ═══════════════════════════════════════════ -->
+  <section class="proj-section" id="projects" style="padding-top:5rem;">
+    <div class="container">
+
+      <div class="proj-header">
+        <div class="proj-title-group">
+          <span class="proj-number fade-up">PROJECT 01 · DATABASE ENGINE</span>
+          <h2 class="proj-title fade-up-2">Storage<br><em>Engine</em></h2>
+          <p class="proj-tagline fade-up-3">
+            A custom-built database storage engine written from scratch —
+            implementing core data structures, disk I/O, indexing, and query
+            resolution without relying on any existing database library.
+          </p>
+          <div class="tags fade-up-4">
+            <span class="tag teal">Built from Scratch</span>
+            <span class="tag">Storage Engine</span>
+            <span class="tag blue">Custom Indexing</span>
+            <span class="tag">Disk I/O</span>
+            <span class="tag amber">Low-Level</span>
+          </div>
+        </div>
+        <div class="proj-actions fade-up-3">
+          <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="btn btn-primary">GitHub ↗</a>
+          <a href="#db-details" class="btn btn-outline">Details ↓</a>
+        </div>
       </div>
 
-      <div class="zero-dep-badge fade-up-4">
+      <!-- Stats -->
+      <div class="stat-grid" id="db-details">
+        <div class="stat-block">
+          <span class="stat-num">0</span>
+          <span class="stat-label">External DB Libraries</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">B-Tree</span>
+          <span class="stat-label">Index Structure</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">ACID</span>
+          <span class="stat-label">Transaction Model</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">Raw</span>
+          <span class="stat-label">Disk Page I/O</span>
+        </div>
+      </div>
+
+      <!-- Architecture Diagram -->
+      <div class="two-col" style="gap:3rem; margin:3rem 0; align-items:start;">
+        <div>
+          <div class="label" style="margin-bottom:.75rem;">Architecture</div>
+          <h3 style="font-family:var(--font-head);font-size:1.5rem;margin-bottom:1rem;">Layered storage model, built layer by layer</h3>
+          <p style="color:var(--text-2); margin-bottom:1.5rem; font-size:.95rem;">
+            The engine is structured as discrete, replaceable layers —
+            from raw byte pages on disk through the indexing and query
+            planner, up to a clean API surface. Each layer was implemented
+            and tested independently.
+          </p>
+          <div class="arch-diagram">
+            <div class="arch-row">
+              <span class="arch-label">API Layer</span>
+              <div class="arch-box teal">Query Interface / API</div>
+            </div>
+            <div class="arch-sep">↕</div>
+            <div class="arch-row">
+              <span class="arch-label">Query Layer</span>
+              <div class="arch-box blue">Query Planner &amp; Executor</div>
+            </div>
+            <div class="arch-sep">↕</div>
+            <div class="arch-row">
+              <span class="arch-label">Index Layer</span>
+              <div class="arch-box amber">B-Tree Index Manager</div>
+            </div>
+            <div class="arch-sep">↕</div>
+            <div class="arch-row">
+              <span class="arch-label">Storage Layer</span>
+              <div class="arch-box gray">Page Cache &amp; Buffer Pool</div>
+            </div>
+            <div class="arch-sep">↕</div>
+            <div class="arch-row">
+              <span class="arch-label">Disk Layer</span>
+              <div class="arch-box gray">Raw File I/O · Fixed-Size Pages</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="label" style="margin-bottom:.75rem;">Screenshot / Demo</div>
+          <div class="screenshot-placeholder">
+            <span style="font-size:2rem;">🗄️</span>
+            <span>Add your engine screenshot here</span>
+            <span style="font-size:.65rem; color:var(--text-3);">docs/screenshots/dbengine/hero.png</span>
+          </div>
+          <div class="badge amber" style="margin-top:1rem;">
+            ⚙️ No ORM · No SQLite · No existing DB library
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="label" style="margin-bottom:.75rem;">Core Capabilities</div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🌳</div>
+          <h4>B-Tree Indexing</h4>
+          <p>Self-balancing B-tree index structure implemented from scratch, enabling O(log n) lookups and range queries over large datasets stored on disk.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📄</div>
+          <h4>Page-Based Storage</h4>
+          <p>Fixed-size page layout for all on-disk data. The page cache and buffer pool manage reads and writes, reducing disk I/O through intelligent eviction.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h4>Transaction Support</h4>
+          <p>ACID-aligned transaction model — operations are atomic, consistent, and durable. Write-ahead logging ensures data is recoverable after crashes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h4>Query Planning</h4>
+          <p>A query planner that decides between full table scans and index-based lookups depending on selectivity — without relying on any external query engine.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧪</div>
+          <h4>Test Suite</h4>
+          <p>End-to-end test coverage for insert, delete, update, and range queries — verifying correctness at every layer independently before integration.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📐</div>
+          <h4>Schema Management</h4>
+          <p>Table schema definitions with typed columns, constraints, and serialisation — all handled without an ORM, mapping directly to page-level byte layout.</p>
+        </div>
+      </div>
+
+      <!-- Tech -->
+      <div style="margin-top:2.5rem;">
+        <div class="label" style="margin-bottom:.75rem;">Technology</div>
+        <div class="chips">
+          <span class="chip">Zero external DB libs</span>
+          <span class="chip">B-Tree index</span>
+          <span class="chip">Page-based I/O</span>
+          <span class="chip">Buffer pool</span>
+          <span class="chip">Write-ahead log</span>
+          <span class="chip">Custom query planner</span>
+          <span class="chip">ACID transactions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       BRIDGE SECTION
+  ═══════════════════════════════════════════ -->
+  <div style="padding:4rem 0; background:var(--bg-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="container">
+      <div style="display:flex; align-items:center; gap:2rem; flex-wrap:wrap;">
+        <div style="flex:1; min-width:260px;">
+          <div class="label" style="margin-bottom:.75rem;">The throughline</div>
+          <h3 style="font-family:var(--font-head); font-size:1.5rem; margin-bottom:.75rem;">
+            Same philosophy.<br>Different layers.
+          </h3>
+          <p style="color:var(--text-2); font-size:.95rem; line-height:1.7;">
+            The database engine and DeutschMind are built with the same ethos:
+            own every layer, add no unnecessary dependencies, and make it run
+            forever without maintenance overhead. One operates at the byte level.
+            The other ships a product used by real learners. Both prove the same thing.
+          </p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:.75rem; flex-shrink:0;">
+          <div style="display:flex; align-items:center; gap:1rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1rem 1.25rem;">
+            <span style="font-size:1.5rem;">🗄️</span>
+            <div>
+              <div style="font-weight:700; font-size:.9rem;">DB Storage Engine</div>
+              <div style="font-size:.75rem; color:var(--text-3); font-family:var(--font-mono);">Storage Layer — Bytes &amp; Pages</div>
+            </div>
+          </div>
+          <div style="text-align:center; color:var(--text-3); font-family:var(--font-mono); font-size:.7rem;">↕ same builder, opposite ends</div>
+          <div style="display:flex; align-items:center; gap:1rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1rem 1.25rem;">
+            <span style="font-size:1.5rem;">📚</span>
+            <div>
+              <div style="font-weight:700; font-size:.9rem;">DeutschMind LMS</div>
+              <div style="font-size:.75rem; color:var(--text-3); font-family:var(--font-mono);">Product Layer — UI &amp; Learning</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PROJECT 02 — DEUTSCHMIND LMS
+  ═══════════════════════════════════════════ -->
+  <section class="proj-section">
+    <div class="container">
+
+      <div class="proj-header">
+        <div class="proj-title-group">
+          <span class="proj-number fade-up">PROJECT 02 · LMS PLATFORM</span>
+          <h2 class="proj-title fade-up-2">DeutschMind<br><em>Language Platform</em></h2>
+          <p class="proj-tagline fade-up-3">
+            A fully static, browser-native German language learning platform — no npm,
+            no bundlers, no CDN imports. 3,000+ vocabulary entries, 60+ grammar topics,
+            and a specialised FSP module for healthcare professionals.
+          </p>
+          <div class="tags fade-up-4">
+            <span class="tag teal">Zero Dependencies</span>
+            <span class="tag">CEFR A1 – C2</span>
+            <span class="tag amber">FSP Healthcare Module</span>
+            <span class="tag blue">Web Speech API</span>
+          </div>
+        </div>
+        <div class="proj-actions fade-up-3">
+          <a href="https://aliattia02.github.io/DeutschMind" target="_blank" rel="noopener" class="btn btn-primary">Live Platform ↗</a>
+          <a href="https://github.com/aliattia02" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="badge teal" style="margin-bottom:2rem;">
         ⚡ No npm · No bundlers · No CDN · Pure browser — runs anywhere, forever
       </div>
-    </div>
-  </section>
 
-  <!-- MAIN SCREENSHOT -->
-  <section style="padding:3rem 0;">
-    <div class="container">
-      <img src="docs/screenshots/deutschmind/deutschmind-hero.png"
-           alt="DeutschMind — Main vocabulary interface"
-           class="proj-screenshot" style="aspect-ratio:16/7;">
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <section style="padding:3rem 0;">
-    <div class="container">
+      <!-- Stats -->
       <div class="stat-grid">
         <div class="stat-block">
           <span class="stat-num">3,000+</span>
@@ -155,48 +785,25 @@
         </div>
         <div class="stat-block">
           <span class="stat-num">10</span>
-          <span class="stat-label">FSP Legal &amp; Professional Topics</span>
+          <span class="stat-label">FSP Professional Topics</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <div class="container"><div class="divider"></div></div>
-
-  <!-- CEFR LEVELS -->
-  <section>
-    <div class="container">
-      <div class="label" style="margin-bottom:.75rem;">Coverage</div>
-      <h2 style="font-size:2rem; margin-bottom:1rem;">Full CEFR Spectrum</h2>
-      <p style="color:var(--text-2); max-width:560px; margin-bottom:2rem;">
-        Content spans the complete European language framework — from absolute beginner A1
-        all the way to C2 mastery — all filterable in real-time without a page reload.
-      </p>
-
-      <div class="cefr-grid" style="margin-bottom:3rem;">
-        <div class="cefr-level">
-          <span class="cefr-code">A1</span>
-          <span class="cefr-label">Beginner</span>
-        </div>
-        <div class="cefr-level">
-          <span class="cefr-code">A2</span>
-          <span class="cefr-label">Elementary</span>
-        </div>
-        <div class="cefr-level">
-          <span class="cefr-code">B1</span>
-          <span class="cefr-label">Intermediate</span>
-        </div>
-        <div class="cefr-level">
-          <span class="cefr-code">B2</span>
-          <span class="cefr-label">Upper-Int.</span>
-        </div>
-        <div class="cefr-level">
-          <span class="cefr-code">C1</span>
-          <span class="cefr-label">Advanced</span>
-        </div>
-        <div class="cefr-level">
-          <span class="cefr-code">C2</span>
-          <span class="cefr-label">Mastery</span>
+      <!-- CEFR -->
+      <div style="margin:3rem 0;">
+        <div class="label" style="margin-bottom:.5rem;">Coverage</div>
+        <h3 style="font-family:var(--font-head); font-size:1.4rem; margin-bottom:.75rem;">Full CEFR spectrum, filterable in real time</h3>
+        <p style="color:var(--text-2); font-size:.95rem; margin-bottom:1.5rem; max-width:520px;">
+          From absolute beginner A1 to C2 mastery — all content is CEFR-tagged and
+          filterable without a page reload.
+        </p>
+        <div class="cefr-grid">
+          <div class="cefr-level"><span class="cefr-code">A1</span><span class="cefr-label">Beginner</span></div>
+          <div class="cefr-level"><span class="cefr-code">A2</span><span class="cefr-label">Elementary</span></div>
+          <div class="cefr-level"><span class="cefr-code">B1</span><span class="cefr-label">Intermediate</span></div>
+          <div class="cefr-level"><span class="cefr-code">B2</span><span class="cefr-label">Upper-Int.</span></div>
+          <div class="cefr-level"><span class="cefr-code">C1</span><span class="cefr-label">Advanced</span></div>
+          <div class="cefr-level"><span class="cefr-code">C2</span><span class="cefr-label">Mastery</span></div>
         </div>
       </div>
 
@@ -205,7 +812,7 @@
         <div class="feature-card">
           <div class="feature-icon">🎨</div>
           <h4>Gender Colour-Coding (DerDieDas)</h4>
-          <p>Every noun is displayed with its grammatical gender colour — blue for <em>der</em>, red for <em>die</em>, green for <em>das</em> — consistently applied across all 3,000+ entries to build intuitive gender recognition.</p>
+          <p>Every noun displays its grammatical gender visually — consistently applied across all 3,000+ entries to build intuitive gender recognition through colour association.</p>
           <div class="gender-legend">
             <span class="gender-pill der">der — Blue</span>
             <span class="gender-pill die">die — Red</span>
@@ -215,39 +822,39 @@
         <div class="feature-card">
           <div class="feature-icon">🔊</div>
           <h4>Native Voice Controls</h4>
-          <p>Text-to-speech via the Web Speech API with customisable speed, pitch, and voice selection. Zero server calls for privacy and speed. Sequential audio playback with keyboard shortcuts for hands-free study.</p>
+          <p>Text-to-speech via the Web Speech API with customisable speed, pitch, and voice selection. Zero server calls for privacy and speed. Keyboard shortcuts for hands-free study.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🏥</div>
           <h4>FSP Specialised Module</h4>
-          <p>Dedicated Fachsprachenpüfung preparation module covering 10 legal and professional topics for pharmacy and healthcare professionals seeking German language certification for medical licensing.</p>
+          <p>Dedicated Fachsprachenpüfung preparation for pharmacy and healthcare professionals seeking language certification for medical licensing in Germany. 10 domain-specific topics.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">⌨️</div>
           <h4>Interactive JS Engines</h4>
-          <p>Modular JavaScript engines for vocabulary drilling and grammar exercises — all vanilla JS, no framework. Real-time CEFR filtering, thematic grouping, and progress tracking without a single npm package.</p>
+          <p>Modular vanilla JS engines for drilling vocabulary and grammar — real-time CEFR filtering, thematic grouping, and progress tracking with zero npm packages.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🌐</div>
           <h4>Zero-Dependency Architecture</h4>
-          <p>No npm, no bundlers, no CDN imports. Pure HTML5, CSS3, and vanilla JavaScript. Loads instantly, works offline, forkable on any static host, and will keep running indefinitely without dependency rot.</p>
+          <p>Pure HTML5, CSS3, and vanilla JavaScript. Loads instantly, works offline, forkable on any static host, and will keep running indefinitely without dependency rot.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">📚</div>
           <h4>25 Thematic Groups</h4>
-          <p>Vocabulary organised into 25 thematic categories — from everyday conversation to medical and legal terminology — all filterable in real-time for targeted study sessions.</p>
+          <p>Vocabulary organised into 25 thematic categories — from everyday conversation to medical and legal terminology — all filterable in real-time for targeted study.</p>
         </div>
       </div>
 
-      <!-- Screenshot: Grammar -->
-      <div class="two-col" style="gap:3rem; margin-bottom:4rem; align-items:center;">
+      <!-- Grammar + FSP two-col -->
+      <div class="two-col" style="gap:3rem; margin-bottom:3rem; align-items:center;">
         <div>
-          <div class="label" style="margin-bottom:1rem;">Grammar Engine</div>
-          <h3 style="font-size:1.6rem; margin-bottom:1rem;">60+ topics, interactive exercises</h3>
-          <p style="color:var(--text-2); margin-bottom:1rem;">
-            Each grammar topic includes a structured explanation, worked examples, and
-            interactive exercises with immediate feedback. Covers Kasus, Verb conjugation,
-            Konjunktiv, Passiv, and all major German grammar structures up to C2.
+          <div class="label" style="margin-bottom:.75rem;">Grammar Engine</div>
+          <h3 style="font-family:var(--font-head);font-size:1.4rem;margin-bottom:.75rem;">60+ topics, immediate feedback</h3>
+          <p style="color:var(--text-2); font-size:.95rem; margin-bottom:1rem;">
+            Each topic includes a structured explanation, worked examples, and interactive
+            exercises covering Kasus, verb conjugation, Konjunktiv, Passiv, and all major
+            grammar structures up to C2.
           </p>
           <div class="chips">
             <span class="chip">60+ grammar topics</span>
@@ -255,20 +862,21 @@
             <span class="chip">CEFR-filtered</span>
           </div>
         </div>
-        <img src="docs/screenshots/deutschmind/deutschmind-grammar.png"
-             alt="DeutschMind — Grammar lessons interface"
-             class="proj-screenshot">
+        <div class="screenshot-placeholder">
+          <span style="font-size:2rem;">📝</span>
+          <span>Grammar interface screenshot</span>
+          <span style="font-size:.65rem; color:var(--text-3);">docs/screenshots/deutschmind/grammar.png</span>
+        </div>
       </div>
 
-      <!-- Screenshot: FSP Module -->
       <div class="two-col reverse" style="gap:3rem; align-items:center;">
         <div>
-          <div class="label" style="margin-bottom:1rem;">FSP Module</div>
-          <h3 style="font-size:1.6rem; margin-bottom:1rem;">Fachsprachenpüfung for healthcare professionals</h3>
-          <p style="color:var(--text-2); margin-bottom:1rem;">
-            A specialised section covering the clinical language exam required for foreign-trained
-            pharmacists and doctors seeking Approbation in Germany. 10 legal and professional
-            topics with domain-specific vocabulary and scenario training.
+          <div class="label" style="margin-bottom:.75rem;">FSP Module</div>
+          <h3 style="font-family:var(--font-head);font-size:1.4rem;margin-bottom:.75rem;">Fachsprachenpüfung for healthcare professionals</h3>
+          <p style="color:var(--text-2); font-size:.95rem; margin-bottom:1rem;">
+            A specialised section for foreign-trained pharmacists and doctors seeking
+            Approbation in Germany. Domain-specific vocabulary and scenario training across
+            10 legal and professional topics.
           </p>
           <div class="chips">
             <span class="chip">10 FSP topics</span>
@@ -276,36 +884,49 @@
             <span class="chip">Approbation prep</span>
           </div>
         </div>
-        <img src="docs/screenshots/deutschmind/deutschmind-fsp.png"
-             alt="DeutschMind — FSP healthcare language prep module"
-             class="proj-screenshot">
+        <div class="screenshot-placeholder">
+          <span style="font-size:2rem;">🏥</span>
+          <span>FSP module screenshot</span>
+          <span style="font-size:.65rem; color:var(--text-3);">docs/screenshots/deutschmind/fsp.png</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TECH -->
-  <section style="background:var(--bg-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <!-- TECH BAND -->
+  <div class="tech-band">
     <div class="container">
-      <div class="label" style="margin-bottom:.75rem;">Technology</div>
-      <h2 style="font-size:2rem; margin-bottom:1rem;">Why Zero Dependencies?</h2>
-      <p style="color:var(--text-2); max-width:640px; margin-bottom:2rem;">
-        Framework-free development was a deliberate choice — not a limitation.
-        The result is a platform that runs anywhere, loads in milliseconds, and
-        will never break due to a deprecated library or an npm security vulnerability.
-      </p>
-      <div class="chips" style="gap:.6rem;">
-        <span class="chip">HTML5</span>
-        <span class="chip">CSS3</span>
-        <span class="chip">Vanilla JavaScript (ES2020+)</span>
-        <span class="chip">Web Speech API</span>
-        <span class="chip">GitHub Pages</span>
-        <span class="chip">No build step</span>
-        <span class="chip">Offline capable</span>
-        <span class="chip">0 npm dependencies</span>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; flex-wrap:wrap;">
+        <div>
+          <div class="label" style="margin-bottom:.75rem;">DB Engine — Stack</div>
+          <div class="chips">
+            <span class="chip">Zero DB libs</span>
+            <span class="chip">B-Tree</span>
+            <span class="chip">Page I/O</span>
+            <span class="chip">Buffer pool</span>
+            <span class="chip">WAL</span>
+            <span class="chip">ACID</span>
+            <span class="chip">Custom query planner</span>
+          </div>
+        </div>
+        <div>
+          <div class="label" style="margin-bottom:.75rem;">DeutschMind — Stack</div>
+          <div class="chips">
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS3</span>
+            <span class="chip">Vanilla JS (ES2020+)</span>
+            <span class="chip">Web Speech API</span>
+            <span class="chip">GitHub Pages</span>
+            <span class="chip">No build step</span>
+            <span class="chip">0 npm deps</span>
+            <span class="chip">Offline capable</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <p>© 2025 Ali Attia · <a href="index.html">Portfolio</a> · <a href="mailto:aliattia2@gmail.com">Contact</a></p>
