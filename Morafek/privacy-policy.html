@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — CareMate | Clida.Tech</title>
+<style>
+  :root{
+    --bg:#0b0d12;
+    --bg-alt:#12151c;
+    --border:#232733;
+    --text:#e7e9ee;
+    --muted:#9aa2b1;
+    --accent:#4f8cff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;
+  }
+  header{
+    border-bottom:1px solid var(--border);
+    padding:20px 24px;
+  }
+  header a{
+    color:var(--text);
+    text-decoration:none;
+    font-weight:600;
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:48px 24px 96px;
+  }
+  h1{
+    font-size:2rem;
+    margin-bottom:4px;
+  }
+  .updated{
+    color:var(--muted);
+    font-size:0.9rem;
+    margin-bottom:40px;
+  }
+  h2{
+    font-size:1.2rem;
+    margin-top:40px;
+    margin-bottom:12px;
+    color:var(--text);
+    border-left:3px solid var(--accent);
+    padding-left:10px;
+  }
+  p, li{
+    color:var(--muted);
+    font-size:0.98rem;
+  }
+  ul{
+    padding-left:20px;
+  }
+  li{
+    margin-bottom:6px;
+  }
+  strong{
+    color:var(--text);
+  }
+  a{
+    color:var(--accent);
+  }
+  .box{
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 24px;
+    margin-top:16px;
+  }
+  footer{
+    border-top:1px solid var(--border);
+    padding:24px;
+    text-align:center;
+    color:var(--muted);
+    font-size:0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="https://clidatech.com/index.html">← Back to Clida.Tech</a>
+</header>
+
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="updated">CareMate by Clida.Tech · Last updated: July 14, 2026</p>
+
+  <p>
+    CareMate ("we", "us", "our") is a FHIR‑native care coordination platform built
+    for the German healthcare market. This Privacy Policy explains what data we
+    collect, why we collect it, and how it is protected. This project is a
+    demo/portfolio application and is not intended to replace a certified
+    production healthcare system.
+  </p>
+
+  <h2>1. Data We Collect</h2>
+  <ul>
+    <li><strong>Account data:</strong> name, email address, role (patient or clinician), and authentication credentials.</li>
+    <li><strong>Clinical data:</strong> vital signs (heart rate, SpO₂, glucose, blood pressure), encounters, conditions, and diagnosis codes (ICD‑10‑GM).</li>
+    <li><strong>Documents:</strong> clinical documents and files uploaded via the platform.</li>
+    <li><strong>Communications:</strong> secure messages exchanged between patients and clinicians.</li>
+    <li><strong>Technical data:</strong> device identifiers, IP address, and log data used for security and troubleshooting.</li>
+  </ul>
+
+  <h2>2. How We Use Your Data</h2>
+  <ul>
+    <li>To provide core functionality: care coordination, vitals monitoring, and clinical documentation.</li>
+    <li>To support AI‑assisted clinical coding suggestions (processed via Gemini AI).</li>
+    <li>To maintain security, prevent abuse, and comply with legal obligations.</li>
+    <li>To generate exportable FHIR Bundles for patient record portability.</li>
+  </ul>
+
+  <h2>3. Legal Basis &amp; DSGVO / GDPR Compliance</h2>
+  <p>
+    Where the platform processes data of individuals in Germany or the EU, we rely on
+    explicit patient consent and legitimate interest in providing healthcare
+    coordination services, in line with the DSGVO (German GDPR implementation).
+  </p>
+  <div class="box">
+    <p style="margin:0 0 8px 0;"><strong>Your rights under DSGVO/GDPR include:</strong></p>
+    <ul style="margin:0;">
+      <li>Right to access your personal and clinical data.</li>
+      <li>Right to rectification of inaccurate data.</li>
+      <li>Right to erasure ("right to be forgotten").</li>
+      <li>Right to data portability (via FHIR Bundle export).</li>
+      <li>Right to withdraw consent at any time.</li>
+    </ul>
+  </div>
+
+  <h2>4. Data Storage &amp; Security</h2>
+  <ul>
+    <li>Authentication tokens (JWT) are stored in secure mobile keystores.</li>
+    <li>Clinical documents are stored via Cloudinary with LOINC‑categorised access controls.</li>
+    <li>Access to patient data is role‑based (RBAC), limited to authorized clinicians.</li>
+    <li>An offline queue may temporarily store data locally on‑device during connectivity gaps, then sync securely once online.</li>
+  </ul>
+
+  <h2>5. Third‑Party Services</h2>
+  <p>
+    We use limited third‑party services to operate the platform, including cloud
+    document storage (Cloudinary) and AI‑assisted coding suggestions (Google
+    Gemini). These providers process data only as necessary to deliver their
+    respective services and are not permitted to use your data for other purposes.
+  </p>
+
+  <h2>6. Data Retention</h2>
+  <p>
+    Clinical and account data is retained only as long as necessary to provide the
+    service or as required by applicable law. You may request deletion of your
+    data at any time, subject to any legal retention requirements for healthcare
+    records.
+  </p>
+
+  <h2>7. Children's Privacy</h2>
+  <p>
+    CareMate is not directed at children and does not knowingly collect data from
+    minors without appropriate parental or guardian consent, in accordance with
+    applicable healthcare and data protection regulations.
+  </p>
+
+  <h2>8. Changes to This Policy</h2>
+  <p>
+    We may update this Privacy Policy from time to time. Material changes will be
+    reflected by updating the "Last updated" date at the top of this page.
+  </p>
+
+  <h2>9. Contact</h2>
+  <p>
+    For questions about this Privacy Policy or to exercise your data rights,
+    please reach out via the
+    <a href="https://clidatech.com/index.html#contact">contact section</a> of
+    Clida.Tech.
+  </p>
+</main>
+
+<footer>
+  © 2026 Clida.Tech — CareMate is a demo project and not a certified medical device.
+</footer>
+
+</body>
+</html>
