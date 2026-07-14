@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Account — CareMate | Clida.Tech</title>
+<style>
+  :root{
+    --bg:#0b0d12;
+    --bg-alt:#12151c;
+    --border:#232733;
+    --text:#e7e9ee;
+    --muted:#9aa2b1;
+    --accent:#4f8cff;
+    --danger:#ff5f6d;
+    --danger-bg:#2a1418;
+    --danger-border:#4a2229;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;
+  }
+  header{
+    border-bottom:1px solid var(--border);
+    padding:20px 24px;
+  }
+  header a{
+    color:var(--text);
+    text-decoration:none;
+    font-weight:600;
+  }
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:48px 24px 96px;
+  }
+  h1{
+    font-size:2rem;
+    margin-bottom:4px;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:0.95rem;
+    margin-bottom:36px;
+  }
+  h2{
+    font-size:1.2rem;
+    margin-top:40px;
+    margin-bottom:12px;
+    color:var(--text);
+    border-left:3px solid var(--accent);
+    padding-left:10px;
+  }
+  p, li{
+    color:var(--muted);
+    font-size:0.98rem;
+  }
+  ul, ol{
+    padding-left:20px;
+  }
+  li{
+    margin-bottom:8px;
+  }
+  strong{
+    color:var(--text);
+  }
+  a{
+    color:var(--accent);
+  }
+  .box{
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 24px;
+    margin-top:16px;
+  }
+  .danger-box{
+    background:var(--danger-bg);
+    border:1px solid var(--danger-border);
+    border-radius:10px;
+    padding:20px 24px;
+    margin-top:16px;
+  }
+  .danger-box strong{
+    color:var(--danger);
+  }
+  .steps li{
+    margin-bottom:14px;
+  }
+  .cta{
+    display:inline-block;
+    margin-top:10px;
+    background:var(--accent);
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    padding:12px 20px;
+    border-radius:8px;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+  }
+  th, td{
+    text-align:left;
+    padding:10px 12px;
+    border-bottom:1px solid var(--border);
+    font-size:0.92rem;
+    color:var(--muted);
+  }
+  th{
+    color:var(--text);
+  }
+  footer{
+    border-top:1px solid var(--border);
+    padding:24px;
+    text-align:center;
+    color:var(--muted);
+    font-size:0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="https://clidatech.com/index.html">← Back to Clida.Tech</a>
+</header>
+
+<main>
+  <h1>Delete Your Account</h1>
+  <p class="sub">CareMate, developed by Clida.Tech (Ali Attia)</p>
+
+  <p>
+    This page explains how users of the <strong>CareMate</strong> app can request
+    deletion of their account and associated data, in line with Google Play's
+    account deletion requirements.
+  </p>
+
+  <h2>How to Request Deletion</h2>
+  <div class="box">
+    <ol class="steps">
+      <li><strong>In‑app (recommended):</strong> Open CareMate → go to <em>Profile → Settings → Account</em> → tap <em>Delete Account</em> → confirm the request. Your request will be processed within 30 days.</li>
+      <li><strong>By email:</strong> If you no longer have app access, send a deletion request from your registered email address to
+        <a href="mailto:contact@clidatech.com">contact@clidatech.com</a> with the subject line "Account Deletion Request", including your registered email and, if known, your patient/clinician account ID.
+      </li>
+      <li><strong>Verification:</strong> We may ask you to verify your identity before processing the request, to prevent unauthorized deletion of your data.</li>
+    </ol>
+    <a class="cta" href="mailto:contact@clidatech.com?subject=Account%20Deletion%20Request">Email a Deletion Request</a>
+  </div>
+
+  <h2>What Gets Deleted</h2>
+  <div class="box">
+    <table>
+      <tr><th>Data type</th><th>Action</th></tr>
+      <tr><td>Account credentials &amp; profile (name, email, role)</td><td>Deleted</td></tr>
+      <tr><td>Vitals &amp; observations (HR, SpO₂, glucose, BP)</td><td>Deleted</td></tr>
+      <tr><td>Encounters, conditions &amp; diagnosis codes</td><td>Deleted</td></tr>
+      <tr><td>Uploaded documents (Cloudinary)</td><td>Deleted</td></tr>
+      <tr><td>Messages / communication threads</td><td>Deleted</td></tr>
+      <tr><td>Authentication tokens (device keystore)</td><td>Revoked &amp; deleted immediately</td></tr>
+    </table>
+  </div>
+
+  <h2>What May Be Retained</h2>
+  <div class="danger-box">
+    <p style="margin:0 0 8px 0;"><strong>Some data may be retained for a limited period even after account deletion:</strong></p>
+    <ul style="margin:0;">
+      <li>Records required by German healthcare record‑keeping obligations may be retained for up to <strong>10 years</strong>, as required by applicable medical documentation law, even though your account access is removed.</li>
+      <li>Anonymized or aggregated data (no longer linked to you) may be retained for analytics and service improvement.</li>
+      <li>Security and fraud‑prevention logs (e.g. IP address, timestamps) may be retained for up to <strong>90 days</strong>.</li>
+      <li>Backup copies are purged on a rolling cycle and may persist for up to <strong>30 days</strong> after deletion before being fully overwritten.</li>
+    </ul>
+  </div>
+
+  <h2>Processing Time</h2>
+  <p>
+    Deletion requests are processed within <strong>30 days</strong>. You will
+    receive a confirmation email once your account and associated data (other
+    than data required to be retained as described above) have been deleted.
+  </p>
+
+  <h2>Questions</h2>
+  <p>
+    For any questions about this process, contact us at
+    <a href="mailto:contact@clidatech.com">contact@clidatech.com</a> or see our
+    <a href="privacy-policy.html">Privacy Policy</a>.
+  </p>
+</main>
+
+<footer>
+  © 2026 Clida.Tech — CareMate is a demo project and not a certified medical device.
+</footer>
+
+</body>
+</html>
