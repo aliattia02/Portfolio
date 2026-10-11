@@ -1,6 +1,5 @@
-# Hi, I'm Ali Attia
+# Hi, Welcome to CliDaTech
 
-**Clinical AI Developer · Health IT Consultant · Licensed Pharmacist · M.Sc. Digital Health**
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-dia--twin.vercel.app-blue?style=for-the-badge)](https://dia-twin.vercel.app)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/ali-attia-74748bb4)
@@ -8,13 +7,6 @@
 
 ---
 
-## About Me
-
-A licensed pharmacist who has run national EHR deployments, validated clinical datasets at scale, and built clinically validated AI — closing the gap between what clinicians need and what engineers can build.
-
-- 🎓 **M.Sc. Digital Health**, Deggendorf Institute of Technology, Germany — Grade 1.6
-- 💊 **§11 BApO Pharmacist Licence** (Germany)
-- 📍 Oberursel / Munich–Dorfen · Remote / Hybrid · 15–25 hrs/week available
 
 ---
 
@@ -77,46 +69,12 @@ A care coordination platform with a manually implemented FHIR R4 backend — no 
 
 ---
 
-## Professional Background
-
-**Digital Transformation Officer** — Egypt Healthcare Authority *(2021–2023)*  
-Led national EHR rollout across multiple governorates — live production, not a pilot. HL7-FHIR R4, ICD-10, SNOMED CT, ATC, DRG, CPT in production on Dedalus HIS v12. Validated 1,000+ DRG-coded cases for reimbursement accuracy. Trained 500+ clinical and administrative staff. Documented 15% pharmaceutical cost reduction.
-
-**Pharmacist — Clinical Practice** — Zagazig Chest Hospital *(2018–2021)*  
-Hospital clinical pharmacy, COVID-19 outcome dataset collection, drug interaction prevention.
-
-**Pharmaceutical Manager** — Egyptian Armed Forces *(2019–2021)*  
-Supply chain analytics and data-driven inventory optimisation.
-
----
-
-## Education
-
-**M.Sc. Digital Health** · Deggendorf Institute of Technology, Germany · 2022–2025 · Grade 1.6  
-Thesis: *DiaTwin — AI-powered insulin dosing support system* · Supervisor: Prof. Dr. Klaus Parhofer, LMU Munich · Evaluation: Excellent
-
-**B.Sc. Pharmacy (6-year programme)** · Zagazig University, Egypt · 2012–2018
-
----
-
-## Languages
-
-🇸🇦 Arabic — Native · 🇬🇧 English — C1 · 🇩🇪 German — B2 + Fachsprachenprüfung
-
----
-
-## GitHub Stats
-
-![Ali's GitHub Stats](https://github-readme-stats.vercel.app/api?username=aliattia2&show_icons=true&theme=tokyonight)
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=aliattia2&layout=compact&theme=tokyonight)
 
 ---
 
 <div align="center">
 
-**Available for part-time remote / hybrid engagements · FHIR R4 / Clinical AI · Health IT Consulting · Data Analysis & BI**
-
-[![Email Me](https://img.shields.io/badge/Email_Me-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:aliattia2@gmail.com)
+[![Email Me](https://img.shields.io/badge/Email_Me-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:contact@clidatech.com)
 [![Visit Portfolio](https://img.shields.io/badge/Visit_Portfolio-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://dia-twin.vercel.app)
 
 </div>
